@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ouvidoria</title>
+    <link
+      rel="shortcut icon"
+      href="https://img.icons8.com/?size=100&id=37212&format=png&color=000000"
+      type="image/x-icon"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="flex flex-col justify-between max-h-screen">
+    <!-- CABEÇALHO -->
+    {% include '../includes/header.html' %}
+
+    <!-- PRINCIPAL -->
+    <main class="flex justify-between">
+      <form
+        action="{%url 'cadastrar_denuncia' %}"
+        method="POST"
+        class="w-screen mx-auto bg-white p-6 rounded-lg shadow-md"
+      >
+        {% csrf_token %}
+        <!-- TITULO -->
+        <div class="flex-col mb-4">
+          <div class="flex items-center text-center">
+            <h2 class="text-2xl font-bold text-gray-800">
+              Formulário de Denúncia
+            </h2>
+            <img
+              src="https://img.icons8.com/?size=100&id=WCCI8L2xmjKt&format=png&color=000000"
+              class="w-10 h-10"
+            />
+          </div>
+          <small class="text-gray-500"
+            >Por favor, descreva sua denúncia de forma clara e detalhada. Inclua
+            informações relevantes, como o que ocorreu, quando e onde. Sua
+            contribuição é importante para nós.
+          </small>
+        </div>
+
+        <!-- Seção de Informações Pessoais -->
+        <fieldset class="grid grid-cols-2 md:grid-cols-3 gap-2">
+          <legend class="text-xl font-semibold text-gray-700 mb-2">
+            Informações Pessoais
+          </legend>
+
+          <div class="mb-4">
+            <label for="name" class="block text-gray-700">Nome Completo:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              class="mt-1 p-2 border border-gray-300 rounded w-full"
+              placeholder="Seu nome"
+              pattern="[A-Za-zÀ-ÖØ-ÿ' '-]+"
+              required
+            />
+            <small class="text-gray-500"
+              >Por favor, insira seu nome completo como no documento de
+              identidade.</small
+            >
+          </div>
+
+          <div class="mb-4">
+            <label for="email" class="block text-gray-700">E-mail:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="mt-1 p-2 border border-gray-300 rounded w-full"
+              placeholder="Seu e-mail"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+              required
+            />
+            <small class="text-gray-500">Formato: seuemail@exemplo.com</small>
+          </div>
+
+          <div class="mb-4">
+            <label for="phone" class="block text-gray-700">Telefone:</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              class="mt-1 p-2 border border-gray-300 rounded w-full"
+              pattern="^\(\d{2}\) \d{4,5}-\d{4}$"
+              placeholder="Seu telefone"
+              required
+            />
+            <small class="text-gray-500">Formato: (DD) XXXXX-XXXX</small>
+          </div>
+        </fieldset>
+
+        <hr class="mb-2" />
+
+        <!-- Seção de Denúncia -->
+        <fieldset class="grid grid-cols md:grid-cols-2 gap-2">
+          <legend class="text-xl font-semibold text-gray-700 mb-2">
+            Denúncia
+          </legend>
+          <div class="mb-4">
+            <label for="type" class="block text-gray-700"
+              >Tipo de Denúncia:</label
+            >
+            <select
+              id="type"
+              name="type"
+              class="mt-1 p-2 border border-gray-300 rounded w-full"
+              required
+            >
+              <option value="" disabled selected>Selecione uma opção</option>
+              <option value="abuso">Abuso</option>
+              <option value="assédio">Assédio</option>
+              <option value="fraude">Fraude</option>
+              <option value="negligencia">Negligência</option>
+            </select>
+          </div>
+
+          <div class="mb-4">
+            <label for="evidence" class="block text-gray-700"
+              >Anexar Documentos/Provas:</label
+            >
+            <input
+              type="file"
+              id="evidence"
+              name="evidence"
+              class="mt-1 p-2 border border-gray-300 rounded w-full h-11"
+            />
+          </div>
+
+          <div class="col-span-2 mb-4">
+            <label for="description" class="block text-gray-700"
+              >Descrição da Denúncia:</label
+            >
+            <textarea
+              id="description"
+              name="description"
+              rows="4"
+              class="mt-1 p-2 border border-gray-300 rounded w-full resize-none"
+              placeholder="Descreva sua denúncia"
+              required
+            ></textarea>
+          </div>
+        </fieldset>
+
+        <hr class="mb-2" />
+
+        <!-- Seção de Contato -->
+        <fieldset>
+          <legend class="text-xl font-semibold text-gray-700 mb-2">
+            Contato
+          </legend>
+          <div class="mb-4">
+            <label for="contact-preference" class="block text-gray-700"
+              >Preferência de Contato:</label
+            >
+            <select
+              id="contact-preference"
+              name="contact-preference"
+              class="mt-1 p-2 border border-gray-300 rounded w-full"
+              required
+            >
+              <option value="" disabled selected>Selecione uma opção</option>
+              <option value="email">E-mail</option>
+              <option value="telefone">Telefone</option>
+            </select>
+          </div>
+
+          <div class="mb-4">
+            <label class="flex items-center">
+              <input
+                type="checkbox"
+                name="confidentiality"
+                required
+                class="mr-2"
+              />
+              <span class="text-gray-700"
+                >Concordo que minha denúncia será tratada de forma
+                confidencial.</span
+              >
+            </label>
+          </div>
+        </fieldset>
+
+        <hr class="mb-2" />
+
+        <!-- Seção de Comentários Adicionais -->
+        <fieldset class="mb-2">
+          <legend class="text-xl font-semibold text-gray-700 mb-2">
+            Comentários Adicionais
+          </legend>
+          <div class="mb-4">
+            <label for="comments" class="block text-gray-700"
+              >Comentários Adicionais:</label
+            >
+            <textarea
+              id="comments"
+              name="comments"
+              rows="2"
+              class="mt-1 p-2 border border-gray-300 rounded w-full resize-none"
+              placeholder="Comentários adicionais"
+            ></textarea>
+          </div>
+        </fieldset>
+
+        <button
+          type="submit"
+          class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-300"
+        >
+          Enviar Denúncia
+        </button>
+      </form>
+    </main>
+
+    <!-- RODAPÉ -->
+    {% include '../includes/footer.html' %}
+  </body>
+</html>

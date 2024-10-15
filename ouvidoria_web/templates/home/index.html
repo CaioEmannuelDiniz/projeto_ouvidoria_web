@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ouvidoria</title>
+    <link
+      rel="shortcut icon"
+      href="https://img.icons8.com/?size=100&id=37212&format=png&color=000000"
+      type="image/x-icon"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="flex flex-col justify-between max-h-screen">
+    <!-- CABEÇALHO -->
+    {% include '../includes/header.html' %}
+
+    <!-- PRINCIPAL -->
+    <main
+      class="flex flex-col md:flex-row justify-center md:py-2 md:h-screen flex-grow flex-wrap"
+    >
+      <!-- CONTAINER PRINCIPAL -->
+      <div
+        class="container flex flex-col md:flex-row items-center justify-center md:max-h-screen overflow-hidden"
+      >
+        <!-- CARD 1 -->
+        <div
+          class="select-none py-2 text-white bg-red-600 m-3 p-6 border border-gray-500 flex-col text-center min-w-36 min-h-64 max-h-64 max-w-48 rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-lg hover:cursor-pointer"
+        >
+          <a
+            href="{% url 'formulario_denuncia' %}"
+            class="inset-0 absolute min-w-full min-h-full rounded-lg"
+          >
+            <!-- IMAGEM -->
+            <a class="flex justify-center">
+              <img
+                src="https://img.icons8.com/?size=100&id=WCCI8L2xmjKt&format=png&color=FFFFFF"
+                alt="Descrição da imagem"
+                class="w-16 h-16 p-2 backdrop-blur-md bg-white/50 rounded-full"
+              />
+            </a>
+
+            <!-- TITULO -->
+            <h2 class="text-xl font-bold py-2">Fazer uma <br />Denúncia</h2>
+            <!-- DESCRIÇÃO -->
+            <div class="text-sm text-center">
+              Reportar comportamento inadequado. Sua voz importa!
+            </div>
+          </a>
+        </div>
+        <!-- CARD 2 -->
+        <div
+          class="select-none py-2 text-white bg-orange-600 m-3 p-6 border border-gray-500 flex-col text-center min-h-64 min-w-36 max-h-64 max-w-48 rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-lg hover:cursor-pointer"
+        >
+          <a
+            href="{% url 'formulario_reclamacao' %}"
+            class="inset-0 absolute min-w-full min-h-full rounded-lg"
+          >
+            <!-- IMAGEM -->
+            <a class="flex justify-center">
+              <img
+                src="https://img.icons8.com/?size=100&id=47848&format=png&color=FFFFFF"
+                alt="Descrição da imagem"
+                class="w-16 h-16 p-2 backdrop-blur-md bg-white/50 rounded-full"
+              />
+            </a>
+            <!-- TITULO -->
+            <h2 class="text-xl font-bold py-2">Fazer uma <br />Reclamação</h2>
+            <!-- DESCRIÇÃO -->
+            <div class="text-sm text-center">
+              Sinta-se à vontade para expressar suas insatisfações. Estamos
+              ouvindo!
+            </div>
+          </a>
+        </div>
+        <!-- CARD 3 -->
+        <div
+          class="select-none py-2 text-white bg-pink-600 m-3 p-6 border border-gray-500 flex-col text-center min-w-36 min-h-64 max-h-64 max-w-48 rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-lg hover:cursor-pointer"
+        >
+          <a
+            href="{% url 'formulario_elogio' %}"
+            class="inset-0 absolute min-w-full min-h-full rounded-lg"
+          >
+            <!-- IMAGEM -->
+            <a class="flex justify-center">
+              <img
+                src="https://img.icons8.com/?size=100&id=24816&format=png&color=FFFFFF"
+                alt="Descrição da imagem"
+                class="w-16 h-16 p-2 backdrop-blur-md bg-white/50 rounded-full"
+              />
+            </a>
+            <!-- TITULO -->
+            <h2 class="text-xl font-bold py-2">
+              Fazer um <br />
+              Elogio
+            </h2>
+            <!-- DESCRIÇÃO -->
+            <div class="text-sm text-center">
+              Agradecemos seu feedback positivo! Sua satisfação nos motiva.
+            </div>
+          </a>
+        </div>
+        <!-- CARD 4 -->
+        <div
+          class="select-none py-2 text-white bg-yellow-600 m-3 p-6 border border-gray-500 flex-col text-center min-w-36 min-h-64 max-h-64 max-w-48 rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-lg hover:cursor-pointer"
+        >
+          <a
+            href="{% url 'formulario_sugestao' %}"
+            class="inset-0 absolute min-w-full min-h-full rounded-lg"
+          >
+            <!-- IMAGEM -->
+            <a class="flex justify-center">
+              <img
+                src="https://img.icons8.com/?size=100&id=38977&format=png&color=FFFFFF"
+                alt="Descrição da imagem"
+                class="w-16 h-16 p-2 backdrop-blur-md bg-white/50 rounded-full"
+              />
+            </a>
+
+            <!-- TITULO -->
+            <h2 class="text-xl font-bold py-2">Fazer uma Sugestão</h2>
+            <!-- DESCRIÇÃO -->
+            <div class="text-sm text-center">
+              Tem uma ideia? Compartilhe conosco e ajude a melhorar!
+            </div>
+          </a>
+        </div>
+        <!-- CARD 5 -->
+        <div
+          class="select-none py-2 text-white bg-green-600 m-3 p-6 border border-gray-500 flex-col text-center min-w-36 min-h-64 max-h-64 max-w-48 rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-lg hover:cursor-pointer"
+        >
+          <a
+            href="{% url 'show_info' %}"
+            class="inset-0 absolute min-w-full min-h-full rounded-lg"
+          >
+            <!-- IMAGEM -->
+            <a class="flex justify-center">
+              <img
+                src="https://img.icons8.com/?size=100&id=37212&format=png&color=FFFFFF"
+                alt="Descrição da imagem"
+                class="w-16 h-16 p-2 backdrop-blur-md bg-white/50 rounded-full"
+              />
+            </a>
+            <!-- TITULO -->
+            <h2 class="text-xl font-bold py-2">
+              Acesso à <br />
+              informação
+            </h2>
+            <!-- DESCRIÇÃO -->
+            <div class="text-sm text-center">
+              Fique por dentro das informações! Acompanhe as informações.
+            </div>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- RODAPÉ -->
+    {% include '../includes/footer.html' %}
+  </body>
+</html>

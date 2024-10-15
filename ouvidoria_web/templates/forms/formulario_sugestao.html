@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ouvidoria</title>
+    <link
+      rel="shortcut icon"
+      href="https://img.icons8.com/?size=100&id=37212&format=png&color=000000"
+      type="image/x-icon"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="flex flex-col justify-between max-h-screen">
+    <!-- CABEÇALHO -->
+    {% include '../includes/header.html' %}
+
+    <!-- PRINCIPAL -->
+    <main class="flex justify-between">
+      <form
+        action=""
+        method="POST"
+        class="w-screen mx-auto bg-white p-6 rounded-lg shadow-md"
+      >
+        {% csrf_token %}
+        <!-- TITULO -->
+        <div class="flex-col mb-4">
+          <div class="flex items-center text-center">
+            <h2 class="text-2xl font-bold text-gray-800">
+              Formulário de Sugestão
+            </h2>
+            <img
+              src="https://img.icons8.com/?size=100&id=38977&format=png&color=000000"
+              class="w-10 h-10"
+            />
+          </div>
+          <small class="text-gray-500"
+            >Agradecemos por compartilhar suas sugestões. Sua opinião é valiosa
+            para nós!</small
+          >
+        </div>
+
+        <!-- Seção de Informações Pessoais -->
+        <fieldset class="grid grid-cols-2 md:grid-cols-3 gap-2">
+          <legend class="text-xl font-semibold text-gray-700 mb-2">
+            Informações Pessoais
+          </legend>
+
+          <div class="mb-4">
+            <label for="name" class="block text-gray-700">Nome Completo:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              class="mt-1 p-2 border border-gray-300 rounded w-full"
+              placeholder="Seu nome"
+              pattern="[A-Za-zÀ-ÖØ-ÿ' '-]+"
+              required
+            />
+            <small class="text-gray-500"
+              >Por favor, insira seu nome completo como no documento de
+              identidade.</small
+            >
+          </div>
+
+          <div class="mb-4">
+            <label for="email" class="block text-gray-700">E-mail:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="mt-1 p-2 border border-gray-300 rounded w-full"
+              placeholder="Seu e-mail"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+              required
+            />
+            <small class="text-gray-500">Formato: seuemail@exemplo.com</small>
+          </div>
+
+          <div class="mb-4">
+            <label for="phone" class="block text-gray-700">Telefone:</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              class="mt-1 p-2 border border-gray-300 rounded w-full"
+              pattern="^\(\d{2}\) \d{4,5}-\d{4}$"
+              placeholder="Seu telefone"
+              required
+            />
+            <small class="text-gray-500">Formato: (DD) XXXXX-XXXX</small>
+          </div>
+        </fieldset>
+
+        <hr class="mb-2" />
+
+        <!-- Seção de Sugestão -->
+        <fieldset>
+          <legend class="text-xl font-semibold text-gray-700 mb-2">
+            Sua Sugestão
+          </legend>
+          <div class="mb-4">
+            <label for="suggestion" class="block text-gray-700"
+              >Descrição da Sugestão:</label
+            >
+            <textarea
+              id="suggestion"
+              name="suggestion"
+              rows="4"
+              class="mt-1 p-2 border border-gray-300 rounded w-full resize-none"
+              placeholder="Descreva sua sugestão"
+              required
+            ></textarea>
+          </div>
+        </fieldset>
+
+        <hr class="mb-2" />
+
+        <!-- Seção de Comentários Adicionais -->
+        <fieldset class="mb-2">
+          <legend class="text-xl font-semibold text-gray-700 mb-2">
+            Comentários Adicionais
+          </legend>
+          <div class="mb-4">
+            <label for="comments" class="block text-gray-700"
+              >Comentários Adicionais:</label
+            >
+            <textarea
+              id="comments"
+              name="comments"
+              rows="2"
+              class="mt-1 p-2 border border-gray-300 rounded w-full resize-none"
+              placeholder="Comentários adicionais"
+            ></textarea>
+          </div>
+        </fieldset>
+
+        <button
+          type="submit"
+          class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-300"
+        >
+          Enviar Sugestão
+        </button>
+      </form>
+    </main>
+
+    <!-- RODAPÉ -->
+    {% include '../includes/footer.html' %}
+    <script src="{% static '../static/app/js/formulario_reclamacao.js' %}"></script>
+  </body>
+</html>
