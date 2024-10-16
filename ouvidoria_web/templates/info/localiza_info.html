@@ -20,7 +20,7 @@
       <form
         action="{%url 'localiza_info'%}"
         method="POST"
-        class="w-screen mx-auto bg-white p-6 rounded-lg shadow-md"
+        class="w-screen h-full mx-auto bg-white p-6 rounded-lg shadow-md"
       >
         {% csrf_token %}
         <!-- TITULO -->
@@ -35,7 +35,8 @@
             />
           </div>
           <small class="text-gray-500"
-            >Por favor, preencha as informações abaixo para localizar os registro.</small
+            >Por favor, preencha as informações abaixo para localizar os
+            registro.</small
           >
         </div>
 
@@ -114,13 +115,49 @@
           >
         </div>
 
-        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-300 flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 2a9 9 0 100 18 9 9 0 000-18zM21 21l-4.35-4.35" />
+        <!-- Botões Final Formulario -->
+        <div class="flex gap-2 pt-8">
+          <a href="{% url 'home' %}" class="w-full">
+            <button
+              type="button"
+              class="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700 transition duration-300"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5 mr-2 inline"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+              Voltar Página de Inicio
+            </button>
+          </a>
+          <button
+            type="submit"
+            class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-300 flex items-center justify-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 mr-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M11 2a9 9 0 100 18 9 9 0 000-18zM21 21l-4.35-4.35"
+              />
             </svg>
             Localizar
-        </button>
-        </button>
+          </button>
+        </div>
       </form>
     </main>
 
