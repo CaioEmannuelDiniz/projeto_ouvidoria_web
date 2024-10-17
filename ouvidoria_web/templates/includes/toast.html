@@ -4,27 +4,29 @@
   href="{% static '../static/app/css/animation_toast.css' %}"
 />
 <script src="{% static '../static/app/js/toast.js' %}" defer></script>
+{% if dict.condicao %}
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        showToast("{{ dict.tipo }}", "{{ dict.mensagem }}");
+      });
+    </script>
+{% endif %}
 
-<script>
-  window.onload = function () {
-    showToast("sucess", "Operação concluída com sucesso!");
-  };
-</script>
 <div
   id="toast"
-  class="fixed top-24 right-10 w-80 h-16 rounded-md overflow-hidden bg-white hover:bg-gray-200 shadow-lg drop-shadow-lg brightness-105"
+  class="fixed top-24 right-10 w-60 sm:w-80 h-16 rounded-md overflow-hidden bg-white hover:bg-gray-200 shadow-lg drop-shadow-lg brightness-105 hidden"
 >
   <div class="flex items-center justify-between gap-3 mb-2 pt-2 px-2">
     <div
       id="type"
       class="rounded-full flex justify-center items-center w-10 h-10"
-    >
-    </div>
-    <small id="message" class="text-sm text-right font-medium select-none"
-      ></small
-    >
-    <svg
-      id="close"
+    ></div>
+    <small
+      id="message"
+      class="text-sm text-center font-medium select-none"
+    ></small>
+    <div id="close">
+      <svg
       xmlns="http://www.w3.org/2000/svg"
       class="text-gray-500 h-5 w-5 cursor-pointer"
       viewBox="0 0 24 24"
@@ -39,12 +41,11 @@
       <line x1="18" y1="6" x2="6" y2="18" />
       <line x1="6" y1="6" x2="18" y2="18" />
     </svg>
+    </div>
+    
   </div>
   <div class="relative w-full bg-gray-200 h-2">
-    <div
-      id="progress"
-      class="h-2 rounded-r-full transition duration-300"
-
-    ></div>
+    <div id="progress" class="h-2 rounded-r-full transition duration-300"></div>
   </div>
 </div>
+

@@ -13,17 +13,20 @@ def home(request):
 
 
 # -- SUGESTÃO --
-#POST PAGINA FOMULARIO SUGESTÃO (OK)
+#POST PAGINA FOMULARIO SUGESTÃO (OK)(OK)
 def send_sugestao(request):
     nome = request.POST.get('name')
     email = request.POST.get('email')
     descricao = request.POST.get('description')
     
+    dict = {
+        'condicao': True,
+        'tipo': 'error',
+        'mensagem': 'Sugestão já registrada!',
+    }
+    
     if Sugestao.objects.filter(nome_completo = nome, email = email, descricao = descricao).exists():
-        return render(request, 'forms/formulario_sugestao.html', {
-                'error': 'Sugestão já registrada!',
-                'elogio': Sugestao.objects.all()
-            })
+        return render(request, 'forms/formulario_sugestao.html',{'dict':dict})
         
     nova_sugestao = Sugestao()
     nova_sugestao.nome_completo = request.POST.get('name')
@@ -32,27 +35,37 @@ def send_sugestao(request):
     nova_sugestao.descricao = request.POST.get('description')
     nova_sugestao.comentario = request.POST.get('comments')
     nova_sugestao.save()
+    
+    dict['tipo'] = 'sucess'
+    dict['mensagem'] = 'Sugestão registrada com sucesso!'
 
-    return redirect('formulario_sugestao')
-#GET PAGINA FORMULARIO SUGESTÃO (OK)
+    return render(request, 'forms/formulario_sugestao.html',{'dict':dict})
+
+#GET PAGINA FORMULARIO SUGESTÃO (OK)(OK)
 def form_sugestao(request):
-    return render(request,'forms/formulario_sugestao.html')
+    dict = {
+        'condicao': False,
+    }
+    return render(request,'forms/formulario_sugestao.html',{'dict':dict})
 
 
 
 
-# -- ELOGIO --
-#POST PAGINA FORMILARIO ELOGIO (OK)
+# -- ELOGIO -- 
+#POST PAGINA FORMILARIO ELOGIO (OK)(OK)
 def send_elogio(request):
     nome = request.POST.get('name')
     email = request.POST.get('email')
     descricao = request.POST.get('description')
     
+    dict = {
+        'condicao': True,
+        'tipo': 'error',
+        'mensagem': 'Elogio já registrada!',
+    }
+    
     if Elogio.objects.filter(nome_completo = nome, email = email, descricao = descricao).exists():
-        return render(request, 'forms/formulario_elogio.html', {
-                'error': 'Elogio já registrada!',
-                'elogio': Elogio.objects.all()
-            })
+        return render(request, 'forms/formulario_elogio.html',{'dict':dict})
         
     novo_elogio = Elogio()
     novo_elogio.nome_completo = request.POST.get('name')
@@ -63,27 +76,36 @@ def send_elogio(request):
     novo_elogio.comentario = request.POST.get('comments')
     novo_elogio.save()
 
-    return redirect('formulario_elogio')
-#GET PAGINA FORMULARIO ELOGIO (OK)
+    dict['tipo'] = 'sucess'
+    dict['mensagem'] = 'Elogio registrada com sucesso!'
+
+    return  render(request, 'forms/formulario_elogio.html',{'dict':dict})
+
+#GET PAGINA FORMULARIO ELOGIO (OK)(OK)
 def form_elogio(request):
-    return render(request,'forms/formulario_elogio.html')
+    dict = {
+        'condicao': False,
+    }
+    return render(request,'forms/formulario_elogio.html',{'dict':dict})
 
 
 
 
-# --- DENUNCIA ---
-#POST PAGINA FORMULARIO DENUNCIA (OK)
+# --- DENUNCIA --- 
+#POST PAGINA FORMULARIO DENUNCIA (OK)(OK)
 def send_denuncia(request):
     
     nome = request.POST.get('name')
     email = request.POST.get('email')
     descricao = request.POST.get('description')
+    dict = {
+                'condicao': True,
+                'tipo': 'error',
+                'mensagem': 'Denúncia já registrada!',
+            }
     
     if Denuncia.objects.filter(nome_completo = nome, email = email, descricao = descricao).exists():
-        return render(request, 'forms/formulario_denuncia.html', {
-                'error': 'Denúncia já registrada!',
-                'denuncias': Denuncia.objects.all()
-            })
+        return render(request, 'forms/formulario_denuncia.html', {'dict':dict})
     
   
     nova_denuncia = Denuncia()
@@ -97,11 +119,17 @@ def send_denuncia(request):
     nova_denuncia.comentario = request.POST.get('comments')
     nova_denuncia.save()
 
-    return redirect('formulario_denuncia')
+    dict['tipo'] = 'sucess'
+    dict['mensagem'] = 'Denúncia registrada com sucesso!'
 
-#GET PAGINA FORMULARIO DENUNCIA (OK)
+    return render(request,'forms/formulario_denuncia.html',{'dict':dict})
+
+#GET PAGINA FORMULARIO DENUNCIA (OK)(OK)
 def form_denuncia(request):
-    return render(request,"forms/formulario_denuncia.html")
+    dict = {
+        'condicao': False,
+    }
+    return render(request,"forms/formulario_denuncia.html",{'dict':dict})
 
 #GET PAGINA LISTA TODAS AS DENUNCIAS (OK)
 def show_denuncias(request):
@@ -114,18 +142,21 @@ def show_denuncias(request):
 
 
 # --- RECLAMAÇÃO ---
-#POST PAGINA FORMULARIO RECLAMAÇÃO (OK)
+#POST PAGINA FORMULARIO RECLAMAÇÃO (OK)(OK)
 def send_reclamacao(request):
      
     nome = request.POST.get('name')
     email = request.POST.get('email')
     descricao = request.POST.get('description')
     
+    dict = {
+        'condicao': True,
+        'tipo': 'error',
+        'mensagem': 'Reclamação já registrada!',
+    }
+    
     if Reclamacao.objects.filter(nome_completo = nome, email = email, descricao = descricao).exists():
-        return render(request, 'forms/formulario_reclamacao.html', {
-                'error': 'Reclamação já registrada!',
-                'denuncias': Reclamacao.objects.all()
-            })
+        return render(request, 'forms/formulario_reclamacao.html',{'dict':dict})
     
   
     nova_reclamacao = Reclamacao()
@@ -138,12 +169,18 @@ def send_reclamacao(request):
     nova_reclamacao.preferencia_contato = request.POST.get('contact-preference')
     nova_reclamacao.comentario = request.POST.get('comments')
     nova_reclamacao.save()
+    
+    dict['tipo'] = 'sucess'
+    dict['mensagem'] = 'Reclamação registrada com sucesso!'
 
-    return redirect('formulario_reclamacao')
+    return render(request, 'forms/formulario_reclamacao.html',{'dict':dict})
 
-#GET PAGINA FORMULARIO RECLAMAÇÃO (OK)
+#GET PAGINA FORMULARIO RECLAMAÇÃO (OK)(OK)
 def form_reclamacao(request):
-    return render(request,'forms/formulario_reclamacao.html')
+    dict = {
+        'condicao': False,
+    }
+    return render(request,'forms/formulario_reclamacao.html',{'dict':dict})
 
 
 
