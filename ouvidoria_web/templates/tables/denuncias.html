@@ -13,73 +13,97 @@
   </head>
   <body class="flex flex-col justify-between max-h-screen">
     <!-- CABEÇALHO -->
-    {% include '../includes/header.html' %}
+    {% include '../includes/header.html' %} 
+    {% include '../includes/toast.html' with dict=dict %}
 
     <!-- PRINCIPAL -->
-    <main class="flex flex-col bg-gray-100 p-8 min-h-screen border overflow-y-scroll>
+    <main
+      class="flex flex-col bg-gray-100 p-8 min-h-screen border overflow-y-scroll"
+    >
       <h1 class="text-2xl font-bold mb-4">Minhas Denúncias</h1>
 
       <div class="max-w-screen">
         <!-- TABELA -->
         <div
-          class="min-w-7xl shadow overflow-hidden border-b border-gray-200 sm:rounded-lg max-w-7xl overflow-x-scroll lg:overflow-hidden"
+          class="min-w-full shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
         >
-          <!-- TABELA CABEÇALHO -->
-          <div
-            class="bg-gray-200 min-h-full px-1 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          >
-            <div class="flex px-2 gap-4 border text-center">
-              <div class="min-w-12 mx-1">ID</div>
-              <div class="min-w-36 mx-2">Nome Completo</div>
-              <div class="min-w-24 mx-2">E-mail</div>
-              <div class="min-w-28 mx-2">Telefone</div>
-              <div class="min-w-16 mx-2">Tipo de Denúncia</div>
-              <div class="min-w-16 mx-2">Arquivo</div>
-              <div class="min-w-24 mx-2">Descrição</div>
-              <div class="min-w-16 mx-2">Preferência Contato</div>
-              <div class="min-w-24 mx-2">Comentário</div>
-              <div class="min-w-36 mx-2">Ações</div>
-            </div>
-          </div>
-          <!-- TABELA LINHAS -->
-          <div class="bg-white divide-y divide-gray-200 text-center">
-            {% for denuncia in denuncias %}
-            <!-- CARD 1 -->
-            <div class="flex px-2 py-2 hover:bg-gray-100 min-h-16 max-h-16">
-              <div class="min-w-12 mx-1">{{denuncia.id}}</div>
-              <div class="min-w-36 mx-2">{{denuncia.nome_completo}}</div>
-              <div class="min-w-36 mx-2 overflow-x-scroll">
-                {{denuncia.email}}
-              </div>
-              <div class="min-w-36 mx-2">{{denuncia.telefone}}</div>
-              <div class="min-w-16 mx-2">{{denuncia.tipo_denuncia}}</div>
-              <div class="min-w-20 mx-2">
-                <a
-                  href="caminho/do/arquivo/joao_oliveira.pdf"
-                  class="text-blue-500 hover:underline"
-                  >Arquivo</a
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-200">
+              <tr
+                class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                <th class="px-2 py-2">ID</th>
+                <th class="px-2 py-2">Nome Completo</th>
+                <th class="px-2 py-2">E-mail</th>
+                <th class="px-2 py-2">Telefone</th>
+                <th class="px-2 py-2">Tipo de Denúncia</th>
+                <th class="px-2 py-2">Arquivo</th>
+                <th class="px-2 py-2">Descrição</th>
+                <th class="px-2 py-2">Preferência Contato</th>
+                <th class="px-2 py-2">Comentário</th>
+                <th class="px-2 py-2">Status</th>
+                <th class="px-2 py-2">Feedback</th>
+                <th class="px-2 py-2">Ações</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              {% for denuncia in denuncias %}
+              <tr class="hover:bg-gray-100 border h-5 max-h-5 overflow-hidden">
+                <td class="px-2 py-2 h-5">{{ denuncia.id }}</td>
+                <td class="px-2 py-2 h-5">{{ denuncia.nome_completo }}</td>
+                <td class="px-2 py-2 h-5">{{ denuncia.email }}</td>
+                <td class="px-2 py-2 h-5">{{ denuncia.telefone }}</td>
+                <td class="px-2 py-2 w-4 max-w-5">
+                  {{ denuncia.tipo_denuncia }}
+                </td>
+                <td class="px-2 py-2">
+                  <a
+                    href="{{ denuncia.arquivo_url }}"
+                    class="text-blue-500 hover:underline h-5"
+                    >Arquivo</a
+                  >
+                </td>
+                <td
+                  class="px-2 py-2 flex overflow-x-scroll min-h-16 h-7 w-28 text-left h-5"
                 >
-              </div>
-              <div class="min-w-36 mx-2 overflow-y-scroll text-left min-h-10 border">
-                {{denuncia.descricao}}
-              </div>
-              <div class="min-w-16 mx-2">{{denuncia.preferencia_contato}}</div>
-              <div class="min-w-36 mx-2 overflow-y-scroll text-left min-h-10 border">
-                {{denuncia.comentario}}
-              </div>
-              <div class="min-w-36 mx-2">
-                <button class="text-blue-600 hover:text-blue-900 mx-2">
-                  Editar
-                </button>
-                <button class="text-red-600 hover:text-red-900 mx-2">
-                  Excluir
-                </button>
-              </div>
-            </div>
-            {% endfor %}
-
-            <!-- Adicione mais linhas conforme necessário -->
-          </div>
+                  {{ denuncia.descricao }}
+                </td>
+                <td class="px-2 py-2 w-4 max-w-5 h-5">
+                  {{ denuncia.preferencia_contato }}
+                </td>
+                <td
+                  class="px-2 py-2 flex overflow-x-scroll min-h-16 h-7 w-28 text-left h-5"
+                >
+                  {{ denuncia.comentario }}
+                </td>
+                <td class="px-2 py-2 w-4 max-w-5">{{ denuncia.status }}</td>
+                <td
+                  class="px-2 py-2 overflow-x-scroll min-h-16 h-7 w-28 text-left h-5"
+                >
+                  {{denuncia.Feedback}}
+                </td>
+                <td class="px-2 py-2 h-5">
+                  <a href="{% url 'alterar_denuncia' denuncia.id %}">
+                  <button
+                    aria-label="Editar denúncia"
+                    class="text-blue-600 hover:text-blue-900 mx-2"
+                  >
+                    Editar
+                  </button>
+                </a>
+                  <a href="{% url 'deletar_denuncia' denuncia.id %}">
+                    <button
+                      aria-label="Excluir denúncia"
+                      class="text-red-600 hover:text-red-900 mx-2"
+                    >
+                      Excluir
+                    </button>
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
       </div>
     </main>

@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect #type:ignore
+from django.shortcuts import render,redirect,get_object_or_404 #type:ignore
 from .models import Denuncia
 from .models import Reclamacao
 from .models import Elogio
@@ -129,6 +129,7 @@ def form_denuncia(request):
     dict = {
         'condicao': False,
     }
+    
     return render(request,"forms/formulario_denuncia.html",{'dict':dict})
 
 #GET PAGINA LISTA TODAS AS DENUNCIAS (OK)
@@ -140,6 +141,31 @@ def show_denuncias(request):
     
     return render(request,"tables/denuncias.html",denuncias)
 
+#GET PAGINA DE ALTERAR UMA DENUNCIA
+def show_denuncia(request,id):
+    denuncia = get_object_or_404(Denuncia, id = id)
+
+    return render(request,"forms/formulario_denuncia.html",{'denuncia': denuncia})
+
+#DELETE PAGINA DELETAR UMA DENUNCIA
+def delete_denuncia(request,id):
+    denuncia = get_object_or_404(Denuncia, id = id)
+    num_excluidos, _ = denuncia.delete()
+    
+    dict = {
+                'condicao': False,
+                'tipo': 'error',
+                'mensagem': 'Denúncia não foi excluida!',
+            }
+    
+    
+    if(num_excluidos > 0):
+        dict['condicao'] = True
+        dict['tipo'] = 'sucess'
+        dict['mensagem'] = 'Denúncia excluida com sucesso!'
+    
+    
+    return render(request,"tables/denuncias.html",{'dict':dict,'denuncias': Denuncia.objects.all()})
 
 # --- RECLAMAÇÃO ---
 #POST PAGINA FORMULARIO RECLAMAÇÃO (OK)(OK)

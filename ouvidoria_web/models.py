@@ -11,6 +11,8 @@ class Denuncia(models.Model):
     descricao = models.TextField()
     preferencia_contato = models.TextField(max_length = 20)
     comentario = models.TextField( null = True,blank = True)    
+    status = models.BooleanField(default=False)
+    feedback = models.TextField(default='')
     
 class Reclamacao(models.Model):
     id = models.AutoField(primary_key = True)
@@ -22,6 +24,8 @@ class Reclamacao(models.Model):
     descricao = models.TextField()
     preferencia_contato = models.TextField(max_length = 20)
     comentario = models.TextField( null = True,blank = True)  
+    status = models.BooleanField(default=False)
+    feedback = models.TextField(default='')
     
 class Elogio(models.Model):
     id = models.AutoField(primary_key = True)
@@ -31,6 +35,8 @@ class Elogio(models.Model):
     classificacao_satisfacao = models.IntegerField()
     descricao = models.TextField()
     comentario = models.TextField( null = True,blank = True)  
+    status = models.BooleanField(default=False)
+    feedback = models.TextField(default='')
 
 class Sugestao(models.Model):
     id = models.AutoField(primary_key = True)
@@ -39,4 +45,6 @@ class Sugestao(models.Model):
     telefone = models.TextField(max_length = 15)
     descricao = models.TextField()
     comentario = models.TextField( null = True,blank = True)  
+    status = models.BooleanField(default=False)
+    feedback = models.TextField(default='')
     

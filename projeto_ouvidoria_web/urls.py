@@ -14,6 +14,10 @@ urlpatterns = [
     path('formulario/denuncia/',views.form_denuncia,name='formulario_denuncia'),
     #GET ROTA MOSTRAR DENUNCIA
     path('denuncias/',views.show_denuncias,name='mostrar_denuncias'),
+    #POST ROTA ALTERAR DENUNCIA
+    path('denuncia/<int:id>/',views.show_denuncia,name='alterar_denuncia'),
+    #DELETE ROTA DELETAR DENUNCIA
+    path('denuncia/deletar/<int:id>/',views.delete_denuncia,name='deletar_denuncia'),
     
     
     #RECLAMAÇÃO

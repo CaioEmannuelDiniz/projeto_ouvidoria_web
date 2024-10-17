@@ -56,8 +56,8 @@
               name="name"
               class="mt-1 p-2 border border-gray-300 rounded w-full"
               placeholder="Seu nome"
-              pattern="[A-Za-zÀ-ÖØ-ÿ' '-]+"
               required
+              value="{{denuncia.nome_completo}}"
             />
             <small class="text-gray-500"
               >Por favor, insira seu nome completo como no documento de
@@ -73,8 +73,9 @@
               name="email"
               class="mt-1 p-2 border border-gray-300 rounded w-full"
               placeholder="Seu e-mail"
-              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+              pattern="/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i"
               required
+              value="{{denuncia.email}}"
             />
             <small class="text-gray-500">Formato: seuemail@exemplo.com</small>
           </div>
@@ -89,6 +90,7 @@
               pattern="^\(\d{2}\) \d{4,5}-\d{4}$"
               placeholder="Seu telefone"
               required
+              value="{{denuncia.telefone}}"
             />
             <small class="text-gray-500">Formato: (DD) XXXXX-XXXX</small>
           </div>
@@ -102,22 +104,21 @@
             Denúncia
           </legend>
           <div class="mb-4">
-            <label for="type" class="block text-gray-700"
-              >Tipo de Denúncia:</label
-            >
+            <label for="type" class="block text-gray-700">Tipo de Denúncia:</label>
             <select
-              id="type"
-              name="type"
-              class="mt-1 p-2 border border-gray-300 rounded w-full"
-              required
+                id="type"
+                name="type"
+                class="mt-1 p-2 border border-gray-300 rounded w-full"
+                required
             >
-              <option value="" disabled selected>Selecione uma opção</option>
-              <option value="abuso">Abuso</option>
-              <option value="assédio">Assédio</option>
-              <option value="fraude">Fraude</option>
-              <option value="negligencia">Negligência</option>
+                <option value="" disabled {% if not denuncia.tipo_denuncia %}selected{% endif %}>Selecione uma opção</option>
+                <option value="abuso" {% if denuncia.tipo_denuncia == "abuso" %}selected{% endif %}>Abuso</option>
+                <option value="assédio" {% if denuncia.tipo_denuncia == "assédio" %}selected{% endif %}>Assédio</option>
+                <option value="fraude" {% if denuncia.tipo_denuncia == "fraude" %}selected{% endif %}>Fraude</option>
+                <option value="negligencia" {% if denuncia.tipo_denuncia == "negligencia" %}selected{% endif %}>Negligência</option>
             </select>
-          </div>
+        </div>
+        
 
           <div class="mb-4">
             <label for="evidence" class="block text-gray-700"
@@ -142,7 +143,7 @@
               class="mt-1 p-2 border border-gray-300 rounded w-full resize-none"
               placeholder="Descreva sua denúncia"
               required
-            ></textarea>
+            >{{denuncia.descricao}}</textarea>
           </div>
         </fieldset>
 
@@ -163,9 +164,9 @@
               class="mt-1 p-2 border border-gray-300 rounded w-full"
               required
             >
-              <option value="" disabled selected>Selecione uma opção</option>
-              <option value="email">E-mail</option>
-              <option value="telefone">Telefone</option>
+              <option value="" disabled {% if not denuncia.preferencia_contato %} selected {% endif %}>Selecione uma opção</option>
+              <option value="email" {% if denuncia.preferencia_contato == "email" %} selected {% endif %} >E-mail</option>
+              <option value="telefone" {% if denuncia.preferencia_contato == "telefone" %} selected {% endif %}>Telefone</option>
             </select>
           </div>
 
@@ -202,7 +203,7 @@
               rows="2"
               class="mt-1 p-2 border border-gray-300 rounded w-full resize-none"
               placeholder="Comentários adicionais"
-            ></textarea>
+            >{{denuncia.comentario}}</textarea>
           </div>
         </fieldset>
 
