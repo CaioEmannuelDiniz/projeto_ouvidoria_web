@@ -92,7 +92,7 @@ def form_elogio(request):
 
 
 # --- DENUNCIA --- 
-#POST PAGINA FORMULARIO DENUNCIA (OK)(OK)
+#POST PAGINA CADASTRAR DENUNCIA (OK)(OK)
 def send_denuncia(request):
     
     nome = request.POST.get('name')
@@ -124,6 +124,42 @@ def send_denuncia(request):
 
     return render(request,'forms/formulario_denuncia.html',{'dict':dict})
 
+#POST PAGINA ALTERAR DENUNCIA
+def alter_denuncia(request, id):
+    denuncia = get_object_or_404(Denuncia, id=id)
+    
+    print(denuncia)
+
+    # Verifica se é uma requisição POST
+    if request.method == 'POST':
+        
+        denuncia.feedback = request.POST.get('feedback')
+        print(request.POST.get('feedback'))
+        print(denuncia.feedback)
+        denuncia.status = request.POST.get('status')
+        print(request.POST.get('status'))
+        print(denuncia.status)
+
+        dict = {
+            'condicao': True,
+            'tipo': 'error',
+            'mensagem': 'Denúncia não foi alterada!',
+        }
+
+        # Salva a denúncia e atualiza a mensagem
+        try:
+            denuncia.save()
+            dict['tipo'] = 'sucess'
+            dict['mensagem'] = 'Denúncia alterada com sucesso!'
+        except Exception:
+            # Lidar com possíveis erros de salvamento
+            dict['mensagem'] = 'Denúncia não foi alterada!'
+
+    # Busca todas as denúncias
+    denuncias = Denuncia.objects.all()
+
+    return render(request, 'tables/denuncias.html', {'dict': dict, 'denuncias': denuncias})
+
 #GET PAGINA FORMULARIO DENUNCIA (OK)(OK)
 def form_denuncia(request):
     dict = {
@@ -150,19 +186,20 @@ def show_denuncia(request,id):
 #DELETE PAGINA DELETAR UMA DENUNCIA
 def delete_denuncia(request,id):
     denuncia = get_object_or_404(Denuncia, id = id)
-    num_excluidos, _ = denuncia.delete()
     
     dict = {
-                'condicao': False,
+                'condicao': True,
                 'tipo': 'error',
                 'mensagem': 'Denúncia não foi excluida!',
             }
     
     
-    if(num_excluidos > 0):
-        dict['condicao'] = True
+    try:
+        denuncia.delete()
         dict['tipo'] = 'sucess'
         dict['mensagem'] = 'Denúncia excluida com sucesso!'
+    except Exception:
+        dict['mensagem'] = 'Denúncia não foi excluida!'
     
     
     return render(request,"tables/denuncias.html",{'dict':dict,'denuncias': Denuncia.objects.all()})

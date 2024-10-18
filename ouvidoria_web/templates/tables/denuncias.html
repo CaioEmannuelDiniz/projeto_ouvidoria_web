@@ -64,7 +64,7 @@
                   >
                 </td>
                 <td
-                  class="px-2 py-2 flex overflow-x-scroll min-h-16 h-7 w-28 text-left h-5"
+                  class="px-2 py-2 flex overflow-y-scroll min-h-16 w-28 text-left h-5 items-center"
                 >
                   {{ denuncia.descricao }}
                 </td>
@@ -72,18 +72,30 @@
                   {{ denuncia.preferencia_contato }}
                 </td>
                 <td
-                  class="px-2 py-2 flex overflow-x-scroll min-h-16 h-7 w-28 text-left h-5"
+                  class="px-2 py-2 flex overflow-y-scroll min-h-16 w-28 text-left h-5 items-center"
                 >
                   {{ denuncia.comentario }}
                 </td>
-                <td class="px-2 py-2 w-4 max-w-5">{{ denuncia.status }}</td>
+                <td class="px-2 py-2 w-10">
+                  <div class="flex gap-1 items-center">
+                  {% if denuncia.status %}
+                    <svg class="h-4 w-4" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="10" cy="10" r="5" fill="green" />
+                    </svg><span>Analisado</span>
+                  {% else %}
+                    <svg class="h-4 w-4" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="10" cy="10" r="5" fill="red" />
+                    </svg><span class="text-red-600">Pendente</span>
+                  {% endif %}
+                  </td>
+                </div>
                 <td
-                  class="px-2 py-2 overflow-x-scroll min-h-16 h-7 w-28 text-left h-5"
+                  class="px-2 py-2 overflow-y-scroll min-h-16 w-28 text-left h-5 items-center"
                 >
-                  {{denuncia.Feedback}}
+                  {{denuncia.feedback}}
                 </td>
                 <td class="px-2 py-2 h-5">
-                  <a href="{% url 'alterar_denuncia' denuncia.id %}">
+                  <a href="{% url 'mostrar_denuncia' denuncia.id %}">
                   <button
                     aria-label="Editar denúncia"
                     class="text-blue-600 hover:text-blue-900 mx-2"

@@ -10,12 +10,14 @@ urlpatterns = [
     #DENUNCIAR
     #POST ROTA CADASTRAR DENUNCIA
     path('cadastrar/denuncia/',views.send_denuncia,name='cadastrar_denuncia'),
+    #POST ROTA ALTERAR DENUNCIA
+    path('denuncia/alterar/<int:id>/',views.alter_denuncia,name='alterar_denuncia'),
     #GET ROTA FORMULARIO DENUNCIA
     path('formulario/denuncia/',views.form_denuncia,name='formulario_denuncia'),
-    #GET ROTA MOSTRAR DENUNCIA
+    #GET ALL ROTA MOSTRAR DENUNCIAS
     path('denuncias/',views.show_denuncias,name='mostrar_denuncias'),
-    #POST ROTA ALTERAR DENUNCIA
-    path('denuncia/<int:id>/',views.show_denuncia,name='alterar_denuncia'),
+    #GET ROTA MOSTRA DENUNCIA
+    path('denuncia/<int:id>/',views.show_denuncia,name='mostrar_denuncia'),
     #DELETE ROTA DELETAR DENUNCIA
     path('denuncia/deletar/<int:id>/',views.delete_denuncia,name='deletar_denuncia'),
     
