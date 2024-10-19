@@ -124,7 +124,7 @@ def send_denuncia(request):
 
     return render(request,'forms/formulario_denuncia.html',{'dict':dict})
 
-#POST PAGINA ALTERAR DENUNCIA
+#POST PAGINA ALTERAR DENUNCIA (OK)(OK)
 def alter_denuncia(request, id):
     denuncia = get_object_or_404(Denuncia, id=id)
     
@@ -168,7 +168,7 @@ def form_denuncia(request):
     
     return render(request,"forms/formulario_denuncia.html",{'dict':dict})
 
-#GET PAGINA LISTA TODAS AS DENUNCIAS (OK)
+#GET PAGINA LISTA TODAS AS DENUNCIAS (OK)(OK)
 def show_denuncias(request):
     
     denuncias ={
@@ -177,13 +177,13 @@ def show_denuncias(request):
     
     return render(request,"tables/denuncias.html",denuncias)
 
-#GET PAGINA DE ALTERAR UMA DENUNCIA
+#GET PAGINA DE ALTERAR UMA DENUNCIA (OK)(OK)
 def show_denuncia(request,id):
     denuncia = get_object_or_404(Denuncia, id = id)
 
     return render(request,"forms/formulario_denuncia.html",{'denuncia': denuncia})
 
-#DELETE PAGINA DELETAR UMA DENUNCIA
+#DELETE PAGINA DELETAR UMA DENUNCIA (OK)(OK)
 def delete_denuncia(request,id):
     denuncia = get_object_or_404(Denuncia, id = id)
     
@@ -238,6 +238,42 @@ def send_reclamacao(request):
 
     return render(request, 'forms/formulario_reclamacao.html',{'dict':dict})
 
+#POST PAGINA ALTERAR RECLAMAÇÃO (OK)(OK)
+def alter_reclamacao(request,id):
+    reclamacao = get_object_or_404(Reclamacao, id=id)
+    
+    print(reclamacao)
+
+    # Verifica se é uma requisição POST
+    if request.method == 'POST':
+        
+        reclamacao.feedback = request.POST.get('feedback')
+        print(request.POST.get('feedback'))
+        print(reclamacao.feedback)
+        reclamacao.status = request.POST.get('status')
+        print(request.POST.get('status'))
+        print(reclamacao.status)
+
+        dict = {
+            'condicao': True,
+            'tipo': 'error',
+            'mensagem': 'Reclamação não foi alterada!',
+        }
+
+        # Salva a reclamação e atualiza a mensagem
+        try:
+            reclamacao.save()
+            dict['tipo'] = 'sucess'
+            dict['mensagem'] = 'Reclamação alterada com sucesso!'
+        except Exception:
+            # Lidar com possíveis erros de salvamento
+            dict['mensagem'] = 'Reclamação não foi alterada!'
+
+    # Busca todas as reclamação
+    reclamacoes = Reclamacao.objects.all()
+
+    return render(request, 'tables/reclamacoes.html', {'dict': dict, 'reclamacoes': reclamacoes})
+
 #GET PAGINA FORMULARIO RECLAMAÇÃO (OK)(OK)
 def form_reclamacao(request):
     dict = {
@@ -245,7 +281,40 @@ def form_reclamacao(request):
     }
     return render(request,'forms/formulario_reclamacao.html',{'dict':dict})
 
+#GET PAGINA LISTA TODAS AS RECLAMAÇÕES (OK)
+def show_reclamacoes(request):
+    reclamacoes = {
+        'reclamacoes':Reclamacao.objects.all()
+    }
+    
+    return render(request,"tables/reclamacoes.html",reclamacoes)
 
+#GET PAGINA DE ALTERAR UMA RECLAMAÇÃO (OK)(OK)
+def show_reclamacao(request,id):
+    reclamacao = get_object_or_404(Reclamacao, id = id)
+
+    return render(request,"forms/formulario_reclamacao.html",{'reclamacao': reclamacao})
+
+#DELETE PAGINA DELETAR UMA RECLAMAÇÃO (OK)(OK)
+def delete_reclamacao(request,id):
+    reclamacao = get_object_or_404(Reclamacao, id = id)
+    
+    dict = {
+                'condicao': True,
+                'tipo': 'error',
+                'mensagem': 'Reclamação não foi excluida!',
+            }
+    
+    
+    try:
+        reclamacao.delete()
+        dict['tipo'] = 'sucess'
+        dict['mensagem'] = 'Reclamação excluida com sucesso!'
+    except Exception:
+        dict['mensagem'] = 'Reclamação não foi excluida!'
+    
+    
+    return render(request,"tables/reclamacoes.html",{'dict':dict,'reclamacoes': Reclamacao.objects.all()})       
 
 
 # --- ACESSO INFO --

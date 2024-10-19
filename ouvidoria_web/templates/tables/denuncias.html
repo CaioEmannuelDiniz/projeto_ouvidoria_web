@@ -25,12 +25,12 @@
       <div class="max-w-screen">
         <!-- TABELA -->
         <div
-          class="min-w-full shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
+          class="min-w-full shadow overflow-x-scroll xl:overflow-hidden border-b border-gray-200 sm:rounded-lg"
         >
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-200">
               <tr
-                class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 <th class="px-2 py-2">ID</th>
                 <th class="px-2 py-2">Nome Completo</th>
@@ -46,14 +46,14 @@
                 <th class="px-2 py-2">Ações</th>
               </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
+            <tbody class="bg-white divide-y divide-gray-200 sm:overflow-x-scroll">
               {% for denuncia in denuncias %}
-              <tr class="hover:bg-gray-100 border h-5 max-h-5 overflow-hidden">
+              <tr class="hover:bg-gray-100 border h-5 max-h-5 overflow-hidden sm:overflow-x-scroll">
                 <td class="px-2 py-2 h-5">{{ denuncia.id }}</td>
-                <td class="px-2 py-2 h-5">{{ denuncia.nome_completo }}</td>
-                <td class="px-2 py-2 h-5">{{ denuncia.email }}</td>
-                <td class="px-2 py-2 h-5">{{ denuncia.telefone }}</td>
-                <td class="px-2 py-2 w-4 max-w-5">
+                <td class="px-2 pt-4 h-5 overflow-x-scroll w-16 text-nowrap max-w-20">{{ denuncia.nome_completo }}</td>
+                <td class="px-2 pt-4 h-5 overflow-x-scroll w-28 text-nowrap max-w-32">{{ denuncia.email }}</td>
+                <td class="px-2 pt-4 h-5 overflow-x-scroll w-24 text-nowrap max-w-28">{{ denuncia.telefone }}</td>
+                <td class="px-2 py-2 w-4 max-w-5 text-center">
                   {{ denuncia.tipo_denuncia }}
                 </td>
                 <td class="px-2 py-2">
@@ -63,18 +63,17 @@
                     >Arquivo</a
                   >
                 </td>
-                <td
-                  class="px-2 py-2 flex overflow-y-scroll min-h-16 w-28 text-left h-5 items-center"
+                <td class="px-2 text-left w-28 overflow-y-scroll align-top"
                 >
-                  {{ denuncia.descricao }}
+                <div class="flex h-5 max-h-5 text-top">{{ denuncia.descricao }}</div>
                 </td>
-                <td class="px-2 py-2 w-4 max-w-5 h-5">
+                <td class="px-2 py-2 w-4 max-w-5 h-5 text-center">
                   {{ denuncia.preferencia_contato }}
                 </td>
                 <td
-                  class="px-2 py-2 flex overflow-y-scroll min-h-16 w-28 text-left h-5 items-center"
+                  class="px-2 text-left w-28 overflow-y-scroll align-top"
                 >
-                  {{ denuncia.comentario }}
+                <div class="flex h-5 max-h-5 text-top">{{ denuncia.comentario }}</div>
                 </td>
                 <td class="px-2 py-2 w-10">
                   <div class="flex gap-1 items-center">
@@ -90,9 +89,9 @@
                   </td>
                 </div>
                 <td
-                  class="px-2 py-2 overflow-y-scroll min-h-16 w-28 text-left h-5 items-center"
+                  class="px-2 text-left w-28  overflow-y-scroll align-top"
                 >
-                  {{denuncia.feedback}}
+                <div class="flex h-5 max-h-5 text-top">{{denuncia.feedback}}</div>
                 </td>
                 <td class="px-2 py-2 h-5">
                   <a href="{% url 'mostrar_denuncia' denuncia.id %}">

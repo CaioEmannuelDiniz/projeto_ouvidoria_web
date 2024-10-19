@@ -20,22 +20,26 @@
     <!-- PRINCIPAL -->
     <main class="flex justify-between">
       <form
-        action="{% url 'cadastrar_reclamacao' %}"
+      action="{% if reclamacao.id %} {%url 'alterar_reclamacao' reclamacao.id %}  {% else %} {%url 'cadastrar_reclamacao' %} {% endif %}"
         method="POST"
         class="w-screen mx-auto bg-white p-6 rounded-lg shadow-md"
       >
         {% csrf_token %}
-        <!-- TITULO -->
+        <!-- SEÇÃO DO TITULO  -->
         <div class="flex-col mb-4">
+          
+          <!-- TITULO -->
           <div class="flex items-center text-center">
             <h2 class="text-2xl font-bold text-gray-800">
               Formulário de Reclamação
             </h2>
             <img
-              src="https://img.icons8.com/?size=100&id=47848&format=png&color=000000"
-              class="w-10 h-10"
+              src="https://img.icons8.com/?size=100&id=24816&format=png&color=000000"
+              class="w-10 h-10  -rotate-180 transform scale-x-[-1]"
             />
           </div>
+
+          <!-- LEGENDA TITULO-->
           <small class="text-gray-500">
             Por favor, descreva sua reclamação de forma clara e detalhada.
             Inclua informações relevantes, como o que ocorreu, quando e onde.
@@ -43,22 +47,27 @@
           </small>
         </div>
 
-        <!-- Seção de Informações Pessoais -->
-        <fieldset class="grid grid-cols-2 md:grid-cols-3 gap-2">
+        <!-- SEÇÃO DE INFORMAÇÕES PESSOAIS -->
+        <fieldset class="flex flex-col md:grid md:grid-cols-3 gap-2">
+
+          <!-- LEGENDA DA SEÇÃO-->
           <legend class="text-xl font-semibold text-gray-700 mb-2">
             Informações Pessoais
           </legend>
 
+          <!-- LABEL DE NOME -->
           <div class="mb-4">
             <label for="name" class="block text-gray-700">Nome Completo:</label>
             <input
               type="text"
               id="name"
               name="name"
-              class="mt-1 p-2 border border-gray-300 rounded w-full"
+              class="{% if reclamacao.nome_completo %} mt-1 p-2 border border-gray-300 rounded w-full text-gray-500 {% else %} mt-1 p-2 border border-gray-300 rounded w-full {% endif %} "
               placeholder="Seu nome"
               pattern="[A-Za-zÀ-ÖØ-ÿ' '-]+"
               required
+              value="{{ reclamacao.nome_completo }}"
+              {% if reclamacao.nome_completo %} disabled {% endif %}
             />
             <small class="text-gray-500"
               >Por favor, insira seu nome completo como no documento de
@@ -66,32 +75,37 @@
             >
           </div>
 
+          <!-- LABEL DE EMAIL -->
           <div class="mb-4">
             <label for="email" class="block text-gray-700">E-mail:</label>
             <input
               type="email"
               id="email"
               name="email"
-              class="mt-1 p-2 border border-gray-300 rounded w-full"
+              class="{% if reclamacao.email %} mt-1 p-2 border border-gray-300 rounded w-full text-gray-500 {% else %} mt-1 p-2 border border-gray-300 rounded w-full {% endif %} "
               placeholder="Seu e-mail"
               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
               required
+              value="{{reclamacao.email}}"
+              {% if reclamacao.email %} disabled {% endif %}
             />
             <small class="text-gray-500 text-wrap"
               >Formato: seuemail@exemplo.com</small
             >
           </div>
 
+          <!-- LABEL DE TELEFONE -->
           <div class="mb-4">
             <label for="phone" class="block text-gray-700">Telefone:</label>
             <input
               type="tel"
               id="phone"
               name="phone"
-              class="mt-1 p-2 border border-gray-300 rounded w-full"
-              pattern="^\(\d{2}\) \d{4,5}-\d{4}$"
+              class="{% if reclamacao.telefone %} mt-1 p-2 border border-gray-300 rounded w-full text-gray-500 {% else %} mt-1 p-2 border border-gray-300 rounded w-full {% endif %} "
               placeholder="Seu telefone"
               required
+              value="{{reclamacao.telefone}}"
+              {% if reclamacao.telefone %} disabled {% endif %}
             />
             <small class="text-gray-500">Formato: (DD) XXXXX-XXXX</small>
           </div>
@@ -99,11 +113,15 @@
 
         <hr class="mb-2" />
 
-        <!-- Seção de Reclamação -->
-        <fieldset class="grid grid-cols md:grid-cols-2 gap-2">
+        <!-- SEÇÃO DE RECLAMAÇÃO -->
+        <fieldset class="flex flex-col md:grid md:grid-cols-2 gap-2">
+
+          <!-- LEGENDA DA SEÇÃO-->
           <legend class="text-xl font-semibold text-gray-700 mb-2">
             Reclamação
           </legend>
+
+          <!-- LABEL TIPO DE RECLAMAÇÃO -->
           <div class="mb-4">
             <label for="type" class="block text-gray-700"
               >Tipo de Reclamação:</label
@@ -111,17 +129,19 @@
             <select
               id="type"
               name="type"
-              class="mt-1 p-2 border border-gray-300 rounded w-full"
+              class="{% if reclamacao.tipo_reclamacao %}mt-1 p-2 border border-gray-300 rounded w-full text-gray-500{% else %}mt-1 p-2 border border-gray-300 rounded w-full{% endif %}"
               required
+              {% if reclamacao.tipo_reclamacao %} disabled {% endif %}
             >
-              <option value="" disabled selected>Selecione uma opção</option>
-              <option value="serviço">Serviço</option>
-              <option value="produto">Produto</option>
-              <option value="atendimento">Atendimento</option>
-              <option value="outra">Outra</option>
+              <option value="" disabled {% if not reclamacao.tipo_reclamacao %}selected{% endif %}>Selecione uma opção</option>
+              <option value="serviço" {% if reclamacao.tipo_reclamacao == "serviço" %}selected{% endif %}>Serviço</option>
+              <option value="produto" {% if reclamacao.tipo_reclamacao == "produto" %}selected{% endif %}>Produto</option>
+              <option value="atendimento" {% if reclamacao.tipo_reclamacao == "atendimento" %}selected{% endif %}>Atendimento</option>
+              <option value="outra" {% if reclamacao.tipo_reclamacao == "outra" %}selected{% endif %}>Outra</option>
             </select>
           </div>
 
+          <!-- LABEL INSATISFAÇÃO-->
           <div class="ml-2 md:ml-6 mb-2">
             <label class="block text-gray-700" for="satisfaction"
               >Classificação de Insatisfação:</label
@@ -129,7 +149,7 @@
 
             <div class="flex faces mb-2">
               <div
-                class="face mx-2 border border-blue-500 p-1"
+                class="{% if reclamacao.classificacao_insatisfacao == 1 %} face mx-2 border border-blue-500 p-1 cursor-default opacity-70 {% elif not reclamacao.id %} face mx-2 p-1 border border-blue-500 {% else %} face mx-2 p-1 cursor-default opacity-70 {% endif %}"
                 value="1"
                 role="button"
                 aria-label="Pouco Insatisfeito"
@@ -137,7 +157,7 @@
                 😶
               </div>
               <div
-                class="face mx-2 p-1"
+                class="{% if reclamacao.classificacao_insatisfacao == 2 %} face mx-2 border border-blue-500 p-1 cursor-default opacity-70 {% elif not reclamacao.id %} face mx-2 p-1 {% else %} face mx-2 p-1 cursor-default opacity-70 {% endif %}"
                 value="2"
                 role="button"
                 aria-label="Insatisfeito"
@@ -145,7 +165,7 @@
                 😐
               </div>
               <div
-                class="face mx-2 p-1"
+                class="{% if reclamacao.classificacao_insatisfacao == 3 %} face mx-2 border border-blue-500 p-1 cursor-default opacity-70 {% elif not reclamacao.id %} face mx-2 p-1 {% else %} face mx-2 p-1 cursor-default opacity-70 {% endif %}"
                 value="3"
                 role="button"
                 aria-label="Neutro"
@@ -153,7 +173,7 @@
                 😟
               </div>
               <div
-                class="face mx-2 p-1"
+                class="{% if reclamacao.classificacao_insatisfacao == 4 %} face mx-2 border border-blue-500 p-1 cursor-default opacity-70 {% elif not reclamacao.id %} face mx-2 p-1 {% else %} face mx-2 p-1 cursor-default opacity-70 {% endif %}"
                 value="4"
                 role="button"
                 aria-label="Satisfeito"
@@ -161,7 +181,7 @@
                 😠
               </div>
               <div
-                class="face mx-2 p-1"
+                class="{% if reclamacao.classificacao_insatisfacao == 5 %} face mx-2 border border-blue-500 p-1 cursor-default opacity-70 {% elif not reclamacao.id %} face mx-2 p-1 {% else %} face mx-2 p-1 cursor-default opacity-70 {% endif %}"
                 value="5"
                 role="button"
                 aria-label="Muito Satisfeito"
@@ -173,9 +193,9 @@
               type="hidden"
               name="dissatisfactionSelected"
               id="dissatisfactionSelected"
-              value="1"
+              value="{% if reclamacao.id %} reclamacao.classificacao_insatisfacao {% else %} 1 {% endif %}"
             />
-            <small class="text-gray-500">
+            <small class="{% if reclamacao.id %} text-gray-500 opacity-70 {% else %} text-gray-500 {% endif %}">
               😶 - Pouco Insatisfeito
               <p class="hidden sm:inline">|</p>
               <p class="block sm:hidden"></p>
@@ -183,6 +203,7 @@
             </small>
           </div>
 
+          <!-- LABEL RECLAMAÇÃO-->
           <div class="col-span-2 mb-4">
             <label for="description" class="block text-gray-700"
               >Descrição da Reclamação:</label
@@ -191,20 +212,25 @@
               id="description"
               name="description"
               rows="4"
-              class="mt-1 p-2 border border-gray-300 rounded w-full resize-none"
+              class="{% if reclamacao.descricao %} mt-1 p-2 border border-gray-300 rounded w-full resize-none text-gray-500 {% else %} mt-1 p-2 border border-gray-300 rounded w-full resize-none{% endif %}"
               placeholder="Descreva sua reclamação"
               required
-            ></textarea>
+              {% if reclamacao.descricao %} disabled {% endif %}
+            >{{reclamacao.descricao}}</textarea>
           </div>
         </fieldset>
 
         <hr class="mb-2" />
 
-        <!-- Seção de Contato -->
+        <!-- SEÇÃO DE CONTATO -->
         <fieldset>
+
+          <!-- LEGENDA DA SEÇÃO-->
           <legend class="text-xl font-semibold text-gray-700 mb-2">
             Contato
           </legend>
+
+          <!-- LABEL PREFERÊNCIA CONTATO-->
           <div class="mb-4">
             <label for="contact-preference" class="block text-gray-700"
               >Preferência de Contato:</label
@@ -212,15 +238,18 @@
             <select
               id="contact-preference"
               name="contact-preference"
-              class="mt-1 p-2 border border-gray-300 rounded w-full"
+              class="{% if reclamacao.preferencia_contato %}mt-1 p-2 border border-gray-300 rounded w-full text-gray-500 {% else %}mt-1 p-2 border border-gray-300 rounded w-full{% endif %}"
               required
+              {% if reclamacao.preferencia_contato %} disabled {% endif %}
             >
-              <option value="" disabled selected>Selecione uma opção</option>
-              <option value="email">E-mail</option>
-              <option value="telefone">Telefone</option>
+              <option value="" disabled {% if not reclamacao.preferencia_contato %} selected {% endif %}>Selecione uma opção</option>
+              <option value="email" {% if reclamacao.preferencia_contato == "email" %} selected {% endif %}>E-mail</option>
+              <option value="telefone" {% if reclamacao.preferencia_contato == "telefone" %} selected {% endif %}>Telefone</option>
             </select>
           </div>
 
+          <!-- LABEL CHECK CONFIDENCIALIDADE -->
+          {% if not reclamacao.id %}
           <div class="mb-4">
             <label class="flex items-center">
               <input
@@ -235,15 +264,20 @@
               >
             </label>
           </div>
+          {% endif %}
         </fieldset>
 
         <hr class="mb-2" />
 
-        <!-- Seção de Comentários Adicionais -->
+        <!-- SEÇÃO DE COMENTÁRIOS ADICIONAIS -->
         <fieldset class="mb-2">
+
+          <!-- LEGENDA DA SEÇÃO-->
           <legend class="text-xl font-semibold text-gray-700 mb-2">
             Comentários Adicionais
           </legend>
+
+          <!-- LABEL COMENTARIO -->
           <div class="mb-4">
             <label for="comments" class="block text-gray-700"
               >Comentários Adicionais:</label
@@ -252,14 +286,57 @@
               id="comments"
               name="comments"
               rows="2"
-              class="mt-1 p-2 border border-gray-300 rounded w-full resize-none"
+              class="{% if reclamacao.comentario %} mt-1 p-2 border border-gray-300 rounded w-full resize-none text-gray-500 {% else %} mt-1 p-2 border border-gray-300 rounded w-full resize-none{% endif %}"
               placeholder="Comentários adicionais"
-            ></textarea>
+              {% if reclamacao.comentario %} disabled {% endif %}
+            >{{reclamacao.comentario}}</textarea>
           </div>
         </fieldset>
 
-        <!-- Botões Final Formulario -->
+        {% if reclamacao.id %}
+
+        <hr class="mb-2" />
+
+        <!-- SEÇÃO DE FEEDBACK -->
+        <fieldset class="mb-4">
+
+          <!-- LEGENDA DA SEÇÃO-->
+          <legend class="text-xl font-semibold text-gray-700 mb-2">
+            Feedback Responsável
+          </legend>
+
+          <!-- LABEL FEEDBACK -->
+          <div class="mb-2">
+            <label for="feedback" class="block text-gray-700">Area de Feedback:</label>
+            <textarea id="feedback" name="feedback" rows="2" 
+            class="mt-1 p-2 border border-gray-300 rounded w-full resize-none"
+            placeholder="Feedback ao solicitante" required>{{reclamacao.feedback}}</textarea>
+          </div>
+
+          <!-- LABEL SITUAÇÃO DA SOLICITÃO-->
+          <div class="mb-4">
+          <label for="status" class="block text-gray-700">Situação da Reclamação:</label>
+            <select
+                id="status"
+                name="status"
+                class="mt-1 p-2 border border-gray-300 rounded w-full"
+                required
+            >
+
+                <option value="True" {% if reclamacao.status %}selected{% endif %}>Analisado</option>
+                <option value="False" {% if not reclamacao.status %}selected{% endif %}>Pendente</option>
+              
+            </select>
+          </div>
+        </fieldset>
+
+        {% endif %}
+
+
+        <!-- BOTÕES FINAL FORMULARIO -->
         <div class="flex gap-2">
+
+          <!-- BOTÃO DE VOLTA PARA PAGINA PRINCIPAL -->
           <a href="{% url 'home' %}" class="w-full">
             <button
               type="button"
@@ -280,11 +357,17 @@
               Voltar Página de Inicio
             </button>
           </a>
+
+          <!-- BOTÃO DE ENVIO FORMULARIO -->
           <button
             type="submit"
             class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-300 flex items-center justify-center"
           >
-            Enviar Reclamação
+          {% if reclamacao.id %} 
+            Alterar Reclamação 
+          {% else %} 
+            Enviar Reclamação 
+          {% endif %}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="w-5 h-5 ml-2 inline"
@@ -298,11 +381,14 @@
               <polyline points="9 18 15 12 9 6" />
             </svg>
           </button>
+        </div>
       </form>
     </main>
 
     <!-- RODAPÉ -->
     {% include '../includes/footer.html' %}
-    <script src="{% static '../static/app/js/faces_avaliacao.js' %}"></script>
+    {% if not reclamacao.id %} 
+      <script src="{% static '../static/app/js/faces_avaliacao.js' %}"></script>
+    {% endif %}
   </body>
 </html>

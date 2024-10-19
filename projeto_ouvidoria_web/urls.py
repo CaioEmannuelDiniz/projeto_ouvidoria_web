@@ -25,8 +25,16 @@ urlpatterns = [
     #RECLAMAÇÃO
     #POST ROTA CADASTRAR RECLAMAÇÃO
     path('cadastrar/reclamacao/',views.send_reclamacao,name='cadastrar_reclamacao'),
+    #POST ROTA ALTERAR RECLAMAÇÃO
+    path('reclamacao/alterar/<int:id>/',views.alter_reclamacao,name='alterar_reclamacao'),
     #GET ROTA FORMULARIO RECLAMAÇÃO
     path('formulario/reclamacao/',views.form_reclamacao,name='formulario_reclamacao'),
+    #GET ALL ROTA MOSTRAR RECLAMAÇÕES
+    path('reclamacoes/',views.show_reclamacoes,name='mostrar_reclamacoes'),
+    #GET ROTA MOSTRA RECLAMACAO
+    path('reclamacao/<int:id>/',views.show_reclamacao,name='mostrar_reclamacao'),
+    #DELETE ROTA DELETAR RECLAMACAO
+    path('reclamacao/deletar/<int:id>/',views.delete_reclamacao,name='deletar_reclamacao'),
     
     
     #SUGESTÃO

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ouvidoria</title>
+    <link
+      rel="shortcut icon"
+      href="https://img.icons8.com/?size=100&id=37212&format=png&color=000000"
+      type="image/x-icon"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="flex flex-col justify-between max-h-screen">
+    <!-- CABEÇALHO -->
+    {% include '../includes/header.html' %} 
+    {% include '../includes/toast.html' with dict=dict %}
+
+    <!-- PRINCIPAL -->
+    <main class="flex flex-col bg-gray-100 p-8 min-h-screen border overflow-y-scroll">
+        <h1 class="text-2xl font-bold mb-4">Minhas Reclamações</h1>
+      
+        <div class="max-w-screen">
+          <!-- TABELA -->
+          <div class="min-w-full shadow overflow-x-scroll xl:overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-200">
+                <tr class="text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th class="px-2 py-2">ID</th>
+                  <th class="px-2 py-2">Nome Completo</th>
+                  <th class="px-2 py-2">E-mail</th>
+                  <th class="px-2 py-2">Telefone</th>
+                  <th class="px-2 py-2">Tipo de Reclamação</th>
+                  <th class="px-2 py-2">Insatisfação</th>
+                  <th class="px-2 py-2">Descrição</th>
+                  <th class="px-2 py-2">Preferência de Contato</th>
+                  <th class="px-2 py-2">Comentário</th>
+                  <th class="px-2 py-2">Status</th>
+                  <th class="px-2 py-2">Feedback</th>
+                  <th class="px-2 py-2">Ações</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200 sm:overflow-x-scroll">
+                {% for reclamacao in reclamacoes %}
+                <tr class="hover:bg-gray-100 border h-5 max-h-5 overflow-hidden sm:overflow-x-scroll">
+                  <td class="px-2 py-2 h-5">{{ reclamacao.id }}</td>
+                  <td class="px-2 pt-4 h-5 overflow-x-scroll w-16 text-nowrap max-w-20">{{ reclamacao.nome_completo }}</td>
+                  <td class="px-2 pt-4 h-5 overflow-x-scroll w-28 text-nowrap max-w-32">{{ reclamacao.email }}</td>
+                  <td class="px-2 pt-4 h-5 overflow-x-scroll w-24 text-nowrap max-w-28">{{ reclamacao.telefone }}</td>
+                  <td class="px-2 py-2 w-4 max-w-5 text-center">
+                    {{ reclamacao.tipo_reclamacao }}
+                  </td>
+                  <td class="px-2 py-2 w-4 max-w-5 text-center">
+                    {% if reclamacao.classificacao_insatisfacao == 1 %}
+                      😶
+                    {% elif reclamacao.classificacao_insatisfacao == 2 %}
+                      😐
+                    {% elif reclamacao.classificacao_insatisfacao == 3 %}
+                      😟
+                    {% elif reclamacao.classificacao_insatisfacao == 4 %}
+                      😠
+                    {% else%}
+                      😡
+                    {% endif %}
+                  </td>
+                  <td class="px-2 text-left w-28 overflow-y-scroll align-top">
+                    <div class="flex h-20 max-h-20 text-top">{{ reclamacao.descricao }}</div>
+                  </td>
+                  <td class="px-2 py-2 w-4 max-w-5 h-5 text-center">
+                    {{ reclamacao.preferencia_contato }}
+                  </td>
+                  <td class="px-2 text-left w-28 overflow-y-scroll align-top">
+                    <div class="flex h-20 max-h-20 text-top">{{ reclamacao.comentario }}</div>
+                  </td>
+                  <td class="px-2 py-2 w-10">
+                    <div class="flex gap-1 items-center">
+                      {% if reclamacao.status %}
+                        <svg class="h-4 w-4" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="10" cy="10" r="5" fill="green" />
+                        </svg><span>Analisado</span>
+                      {% else %}
+                        <svg class="h-4 w-4" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="10" cy="10" r="5" fill="red" />
+                        </svg><span class="text-red-600">Pendente</span>
+                      {% endif %}
+                    </div>
+                  </td>
+                  <td
+                  class="px-2 text-left w-16 max-w-24 text-wrap overflow-y-scroll align-top">
+                    <div class="flex text-wrap h-5 max-h-5 text-top">{{reclamacao.feedback}}</div>
+                </td>
+                  <td class="px-2 py-2 h-5 md:text-nowrap">
+                    <a href="{% url 'mostrar_reclamacao' reclamacao.id %}">
+                      <button aria-label="Editar reclamação" class="text-blue-600 hover:text-blue-900 mx-2">Editar</button>
+                    </a>
+                    <a href="{% url 'deletar_reclamacao' reclamacao.id %}">
+                      <button aria-label="Excluir reclamação" class="text-red-600 hover:text-red-900 mx-2">Excluir</button>
+                    </a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+      
+      
+    <!-- RODAPÉ -->
+    {% include '../includes/footer.html' %}
+  </body>
+</html>

@@ -47,7 +47,7 @@
         </div>
 
         <!-- SEÇÃO DE INFORMAÇÕES PESSOAIS -->
-        <fieldset class="grid grid-cols-2 md:grid-cols-3 gap-2">
+        <fieldset class="flex flex-col md:grid md:grid-cols-3 gap-2">
 
           <!-- LEGENDA DA SEÇÃO-->
           <legend class="text-xl font-semibold text-gray-700 mb-2">
@@ -81,7 +81,6 @@
               name="email"
               class="{% if denuncia.email %} mt-1 p-2 border border-gray-300 rounded w-full text-gray-500 {% else %} mt-1 p-2 border border-gray-300 rounded w-full {% endif %} "
               placeholder="Seu e-mail"
-              pattern="/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i"
               required
               value="{{denuncia.email}}"
               {% if denuncia.email %} disabled {% endif %}
@@ -97,7 +96,6 @@
               id="phone"
               name="phone"
               class="{% if denuncia.telefone %} mt-1 p-2 border border-gray-300 rounded w-full text-gray-500 {% else %} mt-1 p-2 border border-gray-300 rounded w-full {% endif %} "
-              pattern="^\(\d{2}\) \d{4,5}-\d{4}$"
               placeholder="Seu telefone"
               required
               value="{{denuncia.telefone}}"
@@ -110,7 +108,7 @@
         <hr class="mb-2" />
 
         <!-- SEÇÃO DE DENÚNCIA -->
-        <fieldset class="grid grid-cols md:grid-cols-2 gap-2">
+        <fieldset class="flex flex-col md:grid md:grid-cols-2 gap-2">
 
           <!-- LEGENDA DA SEÇÃO-->
           <legend class="text-xl font-semibold text-gray-700 mb-2">
@@ -158,10 +156,10 @@
               id="description"
               name="description"
               rows="4"
-              class="{% if denuncia.email %} mt-1 p-2 border border-gray-300 rounded w-full resize-none text-gray-500 {% else %} mt-1 p-2 border border-gray-300 rounded w-full resize-none{% endif %}"
+              class="{% if denuncia.descricao %} mt-1 p-2 border border-gray-300 rounded w-full resize-none text-gray-500 {% else %} mt-1 p-2 border border-gray-300 rounded w-full resize-none{% endif %}"
               placeholder="Descreva sua denúncia"
               required
-              {% if denuncia.email %} disabled {% endif %}
+              {% if denuncia.descricao %} disabled {% endif %}
             >{{denuncia.descricao}}</textarea>
           </div>
         </fieldset>
