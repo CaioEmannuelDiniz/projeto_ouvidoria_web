@@ -47,8 +47,16 @@ urlpatterns = [
     #ELOGIO
     #POST ROTA CADASTRAR ELOGIO
     path('cadastrar/elogio/',views.send_elogio,name='cadastrar_elogio'),
+    #POST ROTA ALTERAR ELOGIO
+    path('elogio/alterar/<int:id>/',views.alter_elogio,name='alterar_elogio'),
     #GET ROTA FORMULARIO ELOGIO
     path('formulario/elogio/',views.form_elogio,name='formulario_elogio'),
+    #GET ALL ROTA MOSTRAR ELOGIO
+    path('elogios/',views.show_elogios,name='mostrar_elogio'),
+    #GET ROTA MOSTRA ELOGIO
+    path('elogio/<int:id>/',views.show_elogio,name='mostrar_elogio'),
+    #DELETE ROTA DELETAR ELOGIO
+    path('elogio/deletar/<int:id>/',views.delete_elogio,name='deletar_elogio'),
     
     
     #ACESSAR INFO

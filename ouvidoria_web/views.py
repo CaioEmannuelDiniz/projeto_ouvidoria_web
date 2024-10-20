@@ -61,7 +61,7 @@ def send_elogio(request):
     dict = {
         'condicao': True,
         'tipo': 'error',
-        'mensagem': 'Elogio já registrada!',
+        'mensagem': 'Elogio já registrado!',
     }
     
     if Elogio.objects.filter(nome_completo = nome, email = email, descricao = descricao).exists():
@@ -77,9 +77,45 @@ def send_elogio(request):
     novo_elogio.save()
 
     dict['tipo'] = 'sucess'
-    dict['mensagem'] = 'Elogio registrada com sucesso!'
+    dict['mensagem'] = 'Elogio registrado com sucesso!'
 
     return  render(request, 'forms/formulario_elogio.html',{'dict':dict})
+
+#POST PAGINA ALTERAR ELOGIO (OK)(OK)
+def alter_elogio(request, id):
+    elogio = get_object_or_404(Elogio, id=id)
+    
+    print(elogio)
+
+    # Verifica se é uma requisição POST
+    if request.method == 'POST':
+        
+        elogio.feedback = request.POST.get('feedback')
+        print(request.POST.get('feedback'))
+        print(elogio.feedback)
+        elogio.status = request.POST.get('status')
+        print(request.POST.get('status'))
+        print(elogio.status)
+
+        dict = {
+            'condicao': True,
+            'tipo': 'error',
+            'mensagem': 'Elogio não foi alterado!',
+        }
+
+        # Salva o elogio e atualiza a mensagem
+        try:
+            elogio.save()
+            dict['tipo'] = 'sucess'
+            dict['mensagem'] = 'Elogio alterado com sucesso!'
+        except Exception:
+            # Lidar com possíveis erros de salvamento
+            dict['mensagem'] = 'Elogio não foi alterado!'
+
+    # Busca todas os elogios
+    elogios = Elogio.objects.all()
+
+    return render(request, 'tables/elogios.html', {'dict': dict, 'elogios': elogios})
 
 #GET PAGINA FORMULARIO ELOGIO (OK)(OK)
 def form_elogio(request):
@@ -87,6 +123,42 @@ def form_elogio(request):
         'condicao': False,
     }
     return render(request,'forms/formulario_elogio.html',{'dict':dict})
+
+#GET PAGINA LISTA TODOS ELOGIOS (OK)(OK)
+def show_elogios(request):
+       
+    elogios ={
+    'elogios': Elogio.objects.all()
+    }
+    
+    return render(request,"tables/elogios.html",elogios)
+
+#GET PAGINA DE ALTERAR UM ELOGIO (OK)(OK)
+def show_elogio(request,id):
+    elogio = get_object_or_404(Elogio, id = id)
+
+    return render(request,"forms/formulario_elogio.html",{'elogio': elogio})
+
+#DELETE PAGINA DELETAR UM ELOGIO (OK)(OK)
+def delete_elogio(request,id):
+    elogio = get_object_or_404(Elogio, id = id)
+    
+    dict = {
+                'condicao': True,
+                'tipo': 'error',
+                'mensagem': 'Elogio não foi excluido!',
+            }
+    
+    
+    try:
+        elogio.delete()
+        dict['tipo'] = 'sucess'
+        dict['mensagem'] = 'Elogio excluido com sucesso!'
+    except Exception:
+        dict['mensagem'] = 'Elogio não foi excluido!'
+    
+    
+    return render(request,"tables/elogios.html",{'dict':dict,'elogios': Elogio.objects.all()})
 
 
 
@@ -203,6 +275,9 @@ def delete_denuncia(request,id):
     
     
     return render(request,"tables/denuncias.html",{'dict':dict,'denuncias': Denuncia.objects.all()})
+
+
+
 
 # --- RECLAMAÇÃO ---
 #POST PAGINA FORMULARIO RECLAMAÇÃO (OK)(OK)

@@ -18,7 +18,7 @@
 
     <!-- PRINCIPAL -->
     <main class="flex flex-col bg-gray-100 p-8 min-h-screen border overflow-y-scroll">
-        <h1 class="text-2xl font-bold mb-4">Minhas Reclamações</h1>
+        <h1 class="text-2xl font-bold mb-4">Meus Elogios</h1>
       
         <div class="max-w-screen">
           <!-- TABELA -->
@@ -30,10 +30,8 @@
                   <th class="px-2 py-2">Nome Completo</th>
                   <th class="px-2 py-2">E-mail</th>
                   <th class="px-2 py-2">Telefone</th>
-                  <th class="px-2 py-2">Tipo de Reclamação</th>
-                  <th class="px-2 py-2">Insatisfação</th>
+                  <th class="px-2 py-2">Satisfação</th>
                   <th class="px-2 py-2">Descrição</th>
-                  <th class="px-2 py-2">Preferência de Contato</th>
                   <th class="px-2 py-2">Comentário</th>
                   <th class="px-2 py-2">Status</th>
                   <th class="px-2 py-2">Feedback</th>
@@ -41,40 +39,25 @@
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200 sm:overflow-x-scroll">
-                {% for reclamacao in reclamacoes %}
+                {% for elogio in elogios %}
                 <tr class="hover:bg-gray-100 border h-5 max-h-5 overflow-hidden sm:overflow-x-scroll">
-                  <td class="px-2 py-2 h-5">{{ reclamacao.id }}</td>
-                  <td class="px-2 pt-4 h-5 overflow-x-scroll w-16 text-nowrap max-w-20">{{ reclamacao.nome_completo }}</td>
-                  <td class="px-2 pt-4 h-5 overflow-x-scroll w-28 text-nowrap max-w-32">{{ reclamacao.email }}</td>
-                  <td class="px-2 pt-4 h-5 overflow-x-scroll w-24 text-nowrap max-w-28">{{ reclamacao.telefone }}</td>
+                  <td class="px-2 py-2 h-5">{{ elogio.id }}</td>
+                  <td class="px-2 pt-4 h-5 overflow-x-scroll w-32 text-nowrap max-w-36">{{ elogio.nome_completo }}</td>
+                  <td class="px-2 pt-4 h-5 overflow-x-scroll w-32 text-nowrap max-w-36">{{ elogio.email }}</td>
+                  <td class="px-2 pt-4 h-5 overflow-x-scroll w-32 text-nowrap max-w-36">{{ elogio.telefone }}</td>
                   <td class="px-2 py-2 w-4 max-w-5 text-center">
-                    {{ reclamacao.tipo_reclamacao }}
+                    {{elogio.classificacao_satisfacao}}
+                    <span class="text-yellow-500">★</span>
                   </td>
-                  <td class="px-2 py-2 w-4 max-w-5 text-center">
-                    {% if reclamacao.classificacao_insatisfacao == 1 %}
-                      😶
-                    {% elif reclamacao.classificacao_insatisfacao == 2 %}
-                      😐
-                    {% elif reclamacao.classificacao_insatisfacao == 3 %}
-                      😟
-                    {% elif reclamacao.classificacao_insatisfacao == 4 %}
-                      😠
-                    {% else%}
-                      😡
-                    {% endif %}
+                  <td class="px-2 text-left w-36 max-w-40 overflow-y-scroll align-top">
+                    <div class="flex h-5 max-h-5 w-28 max-w-32 text-top">{{ elogio.descricao }}</div>
                   </td>
-                  <td class="px-2 text-left w-20 max-w-32 overflow-y-scroll align-top">
-                    <div class="flex h-5 max-h-5 text-top">{{ reclamacao.descricao }}</div>
-                  </td>
-                  <td class="px-2 py-2 w-4 max-w-5 h-5 text-center">
-                    {{ reclamacao.preferencia_contato }}
-                  </td>
-                  <td class="px-2 text-left w-20 max-w-32 overflow-y-scroll align-top">
-                    <div class="flex h-5 max-h-5 text-top">{{ reclamacao.comentario }}</div>
+                  <td class="px-2 text-left w-36 max-w-40 overflow-y-scroll align-top">
+                    <div class="flex h-5 max-h-5 w-28 max-w-32 text-top">{{ elogio.comentario }}</div>
                   </td>
                   <td class="px-2 py-2 w-10">
                     <div class="flex gap-1 items-center">
-                      {% if reclamacao.status %}
+                      {% if elogio.status %}
                         <svg class="h-4 w-4" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
                           <circle cx="10" cy="10" r="5" fill="green" />
                         </svg><span>Analisado</span>
@@ -86,14 +69,14 @@
                     </div>
                   </td>
                   <td
-                  class="px-2 text-left w-16 max-w-24 text-wrap overflow-y-scroll align-top">
-                    <div class="flex text-wrap h-5 max-h-5 text-top">{{reclamacao.feedback}}</div>
+                  class="px-2 text-left w-36 max-w-40 text-wrap overflow-y-scroll align-top">
+                    <div class="flex h-5 max-h-5 w-20 max-w-24 text-top">{{elogio.feedback}}</div>
                 </td>
                   <td class="px-2 py-2 h-5 md:text-nowrap">
-                    <a href="{% url 'mostrar_reclamacao' reclamacao.id %}">
+                    <a href="{% url 'mostrar_elogio' elogio.id %}">
                       <button aria-label="Editar reclamação" class="text-blue-600 hover:text-blue-900 mx-2">Editar</button>
                     </a>
-                    <a href="{% url 'deletar_reclamacao' reclamacao.id %}">
+                    <a href="{% url 'deletar_elogio' elogio.id %}">
                       <button aria-label="Excluir reclamação" class="text-red-600 hover:text-red-900 mx-2">Excluir</button>
                     </a>
                   </td>
