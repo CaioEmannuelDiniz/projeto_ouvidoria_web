@@ -1,6 +1,6 @@
 # Ouvidoria Web
 
-![Logo da Ouvidoria](https://img.icons8.com/?size=100&id=37212&format=png&color=000000)  <!-- Substitua pelo caminho da sua logo -->
+![Logo da Ouvidoria](https://cdn-icons-png.flaticon.com/256/1436/1436988.png)  <!-- Substitua pelo caminho da sua logo -->
 
 ## Descrição
 A Ouvidoria Web é uma aplicação desenvolvida em Django, que permite a gestão de denúncias, reclamações, elogios e sugestões. Esta aplicação fornece um CRUD completo para gerenciar as interações dos cidadãos de forma eficiente e transparente.
