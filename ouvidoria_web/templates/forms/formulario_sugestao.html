@@ -20,13 +20,15 @@
     <!-- PRINCIPAL -->
     <main class="flex justify-between">
       <form
-        action=""
+        action="{% if sugestao.id %} {%url 'alterar_sugestao' sugestao.id %}  {% else %} {%url 'cadastrar_sugestao' %} {% endif %}"
         method="POST"
         class="w-screen mx-auto bg-white p-6 rounded-lg shadow-md"
       >
         {% csrf_token %}
-        <!-- TITULO -->
+        <!-- SEÇÃO DO TITULO  -->
         <div class="flex-col mb-4">
+
+          <!-- TITULO -->
           <div class="flex items-center text-center">
             <h2 class="text-2xl font-bold text-gray-800">
               Formulário de Sugestão
@@ -36,28 +38,35 @@
               class="w-10 h-10"
             />
           </div>
+
+          <!-- LEGENDA TITULO-->
           <small class="text-gray-500"
             >Agradecemos por compartilhar suas sugestões. Sua opinião é valiosa
             para nós!</small
           >
         </div>
 
-        <!-- Seção de Informações Pessoais -->
-        <fieldset class="grid grid-cols-2 md:grid-cols-3 gap-2">
+        <!-- SEÇÃO DE INFORMAÇÕES PESSOAIS -->
+        <fieldset class="flex flex-col md:grid md:grid-cols-3 gap-2">
+
+          <!-- LEGENDA DA SEÇÃO-->
           <legend class="text-xl font-semibold text-gray-700 mb-2">
             Informações Pessoais
           </legend>
 
+          <!-- LABEL DE NOME -->
           <div class="mb-4">
             <label for="name" class="block text-gray-700">Nome Completo:</label>
             <input
               type="text"
               id="name"
               name="name"
-              class="mt-1 p-2 border border-gray-300 rounded w-full"
+              class="{% if sugestao.nome_completo %} mt-1 p-2 border border-gray-300 rounded w-full text-gray-500 {% else %} mt-1 p-2 border border-gray-300 rounded w-full {% endif %} "
               placeholder="Seu nome"
               pattern="[A-Za-zÀ-ÖØ-ÿ' '-]+"
               required
+              value="{{ sugestao.nome_completo }}"
+              {% if sugestao.nome_completo %} disabled {% endif %}
             />
             <small class="text-gray-500"
               >Por favor, insira seu nome completo como no documento de
@@ -65,30 +74,35 @@
             >
           </div>
 
+          <!-- LABEL DE EMAIL -->
           <div class="mb-4">
             <label for="email" class="block text-gray-700">E-mail:</label>
             <input
               type="email"
               id="email"
               name="email"
-              class="mt-1 p-2 border border-gray-300 rounded w-full"
+              class="{% if sugestao.email %} mt-1 p-2 border border-gray-300 rounded w-full text-gray-500 {% else %} mt-1 p-2 border border-gray-300 rounded w-full {% endif %} "
               placeholder="Seu e-mail"
               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
               required
+              value="{{sugestao.email}}"
+              {% if sugestao.email %} disabled {% endif %}
             />
             <small class="text-gray-500">Formato: seuemail@exemplo.com</small>
           </div>
 
+          <!-- LABEL DE TELEFONE -->
           <div class="mb-4">
             <label for="phone" class="block text-gray-700">Telefone:</label>
             <input
               type="tel"
               id="phone"
               name="phone"
-              class="mt-1 p-2 border border-gray-300 rounded w-full"
-              pattern="^\(\d{2}\) \d{4,5}-\d{4}$"
+              class="{% if sugestao.telefone %} mt-1 p-2 border border-gray-300 rounded w-full text-gray-500 {% else %} mt-1 p-2 border border-gray-300 rounded w-full {% endif %} "
               placeholder="Seu telefone"
               required
+              value="{{sugestao.telefone}}"
+              {% if sugestao.telefone %} disabled {% endif %}
             />
             <small class="text-gray-500">Formato: (DD) XXXXX-XXXX</small>
           </div>
@@ -96,33 +110,42 @@
 
         <hr class="mb-2" />
 
-        <!-- Seção de Sugestão -->
+        <!-- SEÇÃO DE SUGESTÃO -->
         <fieldset>
+
+          <!-- LEGENDA DA SEÇÃO-->
           <legend class="text-xl font-semibold text-gray-700 mb-2">
             Sua Sugestão
           </legend>
+
+          <!-- LABEL SUGESTÃO-->
           <div class="mb-4">
-            <label for="suggestion" class="block text-gray-700"
+            <label for="description" class="block text-gray-700"
               >Descrição da Sugestão:</label
             >
             <textarea
-              id="suggestion"
-              name="suggestion"
+              id="description"
+              name="description"
               rows="4"
-              class="mt-1 p-2 border border-gray-300 rounded w-full resize-none"
+              class="{% if sugestao.descricao %} mt-1 p-2 border border-gray-300 rounded w-full resize-none text-gray-500 {% else %} mt-1 p-2 border border-gray-300 rounded w-full resize-none{% endif %}"
               placeholder="Descreva sua sugestão"
               required
-            ></textarea>
+              {% if sugestao.descricao %} disabled {% endif %}
+            >{{sugestao.descricao}}</textarea>
           </div>
         </fieldset>
 
         <hr class="mb-2" />
 
-        <!-- Seção de Comentários Adicionais -->
+        <!-- SEÇÃO DE COMENTÁRIOS ADICIONAIS -->
         <fieldset class="mb-2">
+
+          <!-- LEGENDA DA SEÇÃO-->
           <legend class="text-xl font-semibold text-gray-700 mb-2">
             Comentários Adicionais
           </legend>
+
+          <!-- LABEL COMENTARIO -->
           <div class="mb-4">
             <label for="comments" class="block text-gray-700"
               >Comentários Adicionais:</label
@@ -131,14 +154,57 @@
               id="comments"
               name="comments"
               rows="2"
-              class="mt-1 p-2 border border-gray-300 rounded w-full resize-none"
+              class="{% if sugestao.comentario %} mt-1 p-2 border border-gray-300 rounded w-full resize-none text-gray-500 {% else %} mt-1 p-2 border border-gray-300 rounded w-full resize-none{% endif %}"
               placeholder="Comentários adicionais"
-            ></textarea>
+              {% if sugestao.comentario %} disabled {% endif %}
+            >{{sugestao.comentario}}</textarea>
           </div>
         </fieldset>
 
-        <!-- Botões Final Formulario -->
+        {% if sugestao.id %}
+
+        <hr class="mb-2" />
+
+        <!-- SEÇÃO DE FEEDBACK -->
+        <fieldset class="mb-4">
+
+          <!-- LEGENDA DA SEÇÃO-->
+          <legend class="text-xl font-semibold text-gray-700 mb-2">
+            Feedback Responsável
+          </legend>
+
+          <!-- LABEL FEEDBACK -->
+          <div class="mb-2">
+            <label for="feedback" class="block text-gray-700">Area de Feedback:</label>
+            <textarea id="feedback" name="feedback" rows="2" 
+            class="mt-1 p-2 border border-gray-300 rounded w-full resize-none"
+            placeholder="Feedback ao solicitante" required>{{sugestao.feedback}}</textarea>
+          </div>
+
+          <!-- LABEL SITUAÇÃO DA SOLICITÃO-->
+          <div class="mb-4">
+          <label for="status" class="block text-gray-700">Situação da Sugestão:</label>
+            <select
+                id="status"
+                name="status"
+                class="mt-1 p-2 border border-gray-300 rounded w-full"
+                required
+            >
+
+                <option value="True" {% if sugestao.status %}selected{% endif %}>Analisado</option>
+                <option value="False" {% if not sugestao.status %}selected{% endif %}>Pendente</option>
+              
+            </select>
+          </div>
+        </fieldset>
+
+        {% endif %}
+
+
+        <!-- BOTÕES FINAL FORMULARIO -->
         <div class="flex gap-2">
+
+          <!-- BOTÃO DE VOLTA PARA PAGINA PRINCIPAL -->
           <a href="{% url 'home' %}" class="w-full">
             <button
               type="button"
@@ -159,11 +225,17 @@
               Voltar Página de Inicio
             </button>
           </a>
+
+          <!-- BOTÃO DE ENVIO FORMULARIO -->
           <button
             type="submit"
             class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-300 flex items-center justify-center"
           >
+          {% if sugestao.id %} 
+            Alterar Sugestão
+          {% else %} 
             Enviar Sugestão
+          {% endif %}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="w-5 h-5 ml-2 inline"
@@ -183,6 +255,5 @@
 
     <!-- RODAPÉ -->
     {% include '../includes/footer.html' %}
-    <script src="{% static '../static/app/js/formulario_reclamacao.js' %}"></script>
   </body>
 </html>

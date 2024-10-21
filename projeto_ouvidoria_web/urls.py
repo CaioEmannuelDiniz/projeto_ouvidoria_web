@@ -40,8 +40,18 @@ urlpatterns = [
     #SUGESTÃO
     #POST ROTA CADASTRAR SUGESTÃO
     path('cadastrar/sugestao/',views.send_sugestao,name='cadastrar_sugestao'),
+    #POST ROTA ALTERAR SUGESTÃO
+    path('sugestao/alterar/<int:id>/',views.alter_sugestao,name='alterar_sugestao'),
     #GET ROTA FORMULARIO SUGESTÃO
     path('formulario/sugestao/',views.form_sugestao,name='formulario_sugestao'),
+    #GET ALL ROTA MOSTRAR SUGESTÃO
+    path('sugestoes/',views.show_sugestoes,name='mostrar_sugestoes'),
+    #GET ROTA MOSTRA SUGESTÃO
+    path('sugestao/<int:id>/',views.show_sugestao,name='mostrar_sugestao'),
+    #DELETE ROTA DELETAR SUGESTÃO
+    path('sugestao/deletar/<int:id>/',views.delete_sugestao,name='deletar_sugestao'),
+    
+    
     
     
     #ELOGIO

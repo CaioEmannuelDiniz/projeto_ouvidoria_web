@@ -41,6 +41,42 @@ def send_sugestao(request):
 
     return render(request, 'forms/formulario_sugestao.html',{'dict':dict})
 
+#POST PAGINA ALTERAR SUGESTÃO (OK)
+def alter_sugestao(request, id):
+    sugestao = get_object_or_404(Sugestao, id=id)
+    
+    print(sugestao)
+
+    # Verifica se é uma requisição POST
+    if request.method == 'POST':
+        
+        sugestao.feedback = request.POST.get('feedback')
+        print(request.POST.get('feedback'))
+        print(sugestao.feedback)
+        sugestao.status = request.POST.get('status')
+        print(request.POST.get('status'))
+        print(sugestao.status)
+
+        dict = {
+            'condicao': True,
+            'tipo': 'error',
+            'mensagem': 'Sugestão não foi alterada!',
+        }
+
+        # Salva o elogio e atualiza a mensagem
+        try:
+            sugestao.save()
+            dict['tipo'] = 'sucess'
+            dict['mensagem'] = 'Sugestão alterada com sucesso!'
+        except Exception:
+            # Lidar com possíveis erros de salvamento
+            dict['mensagem'] = 'Sugestão não foi alterada!'
+
+    # Busca todas os elogios
+    sugestoes = Sugestao.objects.all()
+
+    return render(request, 'tables/sugestoes.html', {'dict': dict, 'sugestoes': sugestoes})
+
 #GET PAGINA FORMULARIO SUGESTÃO (OK)(OK)
 def form_sugestao(request):
     dict = {
@@ -48,6 +84,41 @@ def form_sugestao(request):
     }
     return render(request,'forms/formulario_sugestao.html',{'dict':dict})
 
+#GET PAGINA LISTA TODOS SUGESTÃO (OK)
+def show_sugestoes(request):
+       
+    sugestoes ={
+    'sugestoes': Sugestao.objects.all()
+    }
+    
+    return render(request,"tables/sugestoes.html",sugestoes)
+
+#GET PAGINA DE ALTERAR UM SUGESTÃO (OK)
+def show_sugestao(request,id):
+    sugestao = get_object_or_404(Sugestao, id = id)
+
+    return render(request,"forms/formulario_sugestao.html",{'sugestao': sugestao})
+
+#DELETE PAGINA DELETAR UM SUGESTÃO (OK)
+def delete_sugestao(request,id):
+    sugestao = get_object_or_404(Sugestao, id = id)
+    
+    dict = {
+                'condicao': True,
+                'tipo': 'error',
+                'mensagem': 'Sugestão não foi excluida!',
+            }
+    
+    
+    try:
+        sugestao.delete()
+        dict['tipo'] = 'sucess'
+        dict['mensagem'] = 'Sugestão excluida com sucesso!'
+    except Exception:
+        dict['mensagem'] = 'Sugestão não foi excluida!'
+    
+    
+    return render(request,"tables/sugestoes.html",{'dict':dict,'sugestoes': Sugestao.objects.all()})
 
 
 
