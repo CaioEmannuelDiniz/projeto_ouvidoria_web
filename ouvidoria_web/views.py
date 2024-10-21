@@ -41,7 +41,7 @@ def send_sugestao(request):
 
     return render(request, 'forms/formulario_sugestao.html',{'dict':dict})
 
-#POST PAGINA ALTERAR SUGESTÃO (OK)
+#POST PAGINA ALTERAR SUGESTÃO (OK)(OK)
 def alter_sugestao(request, id):
     sugestao = get_object_or_404(Sugestao, id=id)
     
@@ -75,7 +75,7 @@ def alter_sugestao(request, id):
     # Busca todas os elogios
     sugestoes = Sugestao.objects.all()
 
-    return render(request, 'tables/sugestoes.html', {'dict': dict, 'sugestoes': sugestoes})
+    return render(request, 'tables/sugestoes.html', {'dict': dict, 'sugestoes': sugestoes,'admin': True})
 
 #GET PAGINA FORMULARIO SUGESTÃO (OK)(OK)
 def form_sugestao(request):
@@ -84,22 +84,23 @@ def form_sugestao(request):
     }
     return render(request,'forms/formulario_sugestao.html',{'dict':dict})
 
-#GET PAGINA LISTA TODOS SUGESTÃO (OK)
+#GET PAGINA LISTA TODOS SUGESTÃO (OK)(OK)
 def show_sugestoes(request):
        
     sugestoes ={
-    'sugestoes': Sugestao.objects.all()
+    'sugestoes': Sugestao.objects.all(),
+    'admin': True
     }
     
     return render(request,"tables/sugestoes.html",sugestoes)
 
-#GET PAGINA DE ALTERAR UM SUGESTÃO (OK)
+#GET PAGINA DE ALTERAR UM SUGESTÃO (OK)(OK)
 def show_sugestao(request,id):
     sugestao = get_object_or_404(Sugestao, id = id)
 
     return render(request,"forms/formulario_sugestao.html",{'sugestao': sugestao})
 
-#DELETE PAGINA DELETAR UM SUGESTÃO (OK)
+#DELETE PAGINA DELETAR UM SUGESTÃO (OK)(OK)
 def delete_sugestao(request,id):
     sugestao = get_object_or_404(Sugestao, id = id)
     
@@ -118,7 +119,7 @@ def delete_sugestao(request,id):
         dict['mensagem'] = 'Sugestão não foi excluida!'
     
     
-    return render(request,"tables/sugestoes.html",{'dict':dict,'sugestoes': Sugestao.objects.all()})
+    return render(request,"tables/sugestoes.html",{'dict':dict,'sugestoes': Sugestao.objects.all(),'admin': True})
 
 
 
@@ -186,7 +187,7 @@ def alter_elogio(request, id):
     # Busca todas os elogios
     elogios = Elogio.objects.all()
 
-    return render(request, 'tables/elogios.html', {'dict': dict, 'elogios': elogios})
+    return render(request, 'tables/elogios.html', {'dict': dict, 'elogios': elogios,'admin': True})
 
 #GET PAGINA FORMULARIO ELOGIO (OK)(OK)
 def form_elogio(request):
@@ -199,7 +200,8 @@ def form_elogio(request):
 def show_elogios(request):
        
     elogios ={
-    'elogios': Elogio.objects.all()
+    'elogios': Elogio.objects.all(),
+    'admin': True
     }
     
     return render(request,"tables/elogios.html",elogios)
@@ -229,7 +231,7 @@ def delete_elogio(request,id):
         dict['mensagem'] = 'Elogio não foi excluido!'
     
     
-    return render(request,"tables/elogios.html",{'dict':dict,'elogios': Elogio.objects.all()})
+    return render(request,"tables/elogios.html",{'dict':dict,'elogios': Elogio.objects.all(),'admin': True})
 
 
 
@@ -301,7 +303,7 @@ def alter_denuncia(request, id):
     # Busca todas as denúncias
     denuncias = Denuncia.objects.all()
 
-    return render(request, 'tables/denuncias.html', {'dict': dict, 'denuncias': denuncias})
+    return render(request, 'tables/denuncias.html', {'dict': dict, 'denuncias': denuncias, 'admin':True})
 
 #GET PAGINA FORMULARIO DENUNCIA (OK)(OK)
 def form_denuncia(request):
@@ -315,7 +317,8 @@ def form_denuncia(request):
 def show_denuncias(request):
     
     denuncias ={
-    'denuncias': Denuncia.objects.all()
+    'denuncias': Denuncia.objects.all(),
+    'admin': True
     }
     
     return render(request,"tables/denuncias.html",denuncias)
@@ -345,7 +348,7 @@ def delete_denuncia(request,id):
         dict['mensagem'] = 'Denúncia não foi excluida!'
     
     
-    return render(request,"tables/denuncias.html",{'dict':dict,'denuncias': Denuncia.objects.all()})
+    return render(request,"tables/denuncias.html",{'dict':dict,'denuncias': Denuncia.objects.all(),'admin': True})
 
 
 
@@ -418,7 +421,7 @@ def alter_reclamacao(request,id):
     # Busca todas as reclamação
     reclamacoes = Reclamacao.objects.all()
 
-    return render(request, 'tables/reclamacoes.html', {'dict': dict, 'reclamacoes': reclamacoes})
+    return render(request, 'tables/reclamacoes.html', {'dict': dict, 'reclamacoes': reclamacoes,'admin': True})
 
 #GET PAGINA FORMULARIO RECLAMAÇÃO (OK)(OK)
 def form_reclamacao(request):
@@ -430,7 +433,8 @@ def form_reclamacao(request):
 #GET PAGINA LISTA TODAS AS RECLAMAÇÕES (OK)
 def show_reclamacoes(request):
     reclamacoes = {
-        'reclamacoes':Reclamacao.objects.all()
+        'reclamacoes':Reclamacao.objects.all(),
+        'admin': True
     }
     
     return render(request,"tables/reclamacoes.html",reclamacoes)
@@ -460,48 +464,60 @@ def delete_reclamacao(request,id):
         dict['mensagem'] = 'Reclamação não foi excluida!'
     
     
-    return render(request,"tables/reclamacoes.html",{'dict':dict,'reclamacoes': Reclamacao.objects.all()})       
+    return render(request,"tables/reclamacoes.html",{'dict':dict,'reclamacoes': Reclamacao.objects.all(),'admin': True})       
 
 
 # --- ACESSO INFO --
-#GET PAGINA ACESSO A INFO LOCALIZAR
+#GET PAGINA ACESSO A INFO LOCALIZAR(OK)
 def find_localiza_info(request):
     nome = request.POST.get('name')
     email = request.POST.get('email')
     telefone = request.POST.get('phone')
     tipo  = request.POST.get('type')
     
+    dict = {
+        'condicao': True,
+        'tipo': 'error',
+        'mensagem': 'Informações não encontrada!',
+    }
+    
     if(tipo == 'denuncia'):
         
         denuncia = Denuncia.objects.filter(nome_completo = nome, email = email, telefone = telefone)
         
         if denuncia.exists():
-            {'denuncia':denuncia}
-            print(denuncia)
-            
-        print('models')
+            return render(request,"tables/denuncias.html",{'denuncias': denuncia,'admin': False})
+        else:
+            dict['mensagem'] = 'Nenhuma denúncia encontrada!'
+        
     elif(tipo == 'reclamacao'):
         reclamacao = Reclamacao.objects.filter(nome_completo = nome, email = email, telefone = telefone)
         
         if reclamacao.exists():
-            {'reclamacao':reclamacao}
-            print(reclamacao)
+           return render(request,"tables/reclamacoes.html",{'reclamacoes': reclamacao,'admin': False})
+        else:
+            dict['mensagem'] = 'Nenhuma reclamação encontrada!'
+ 
             
     elif(tipo == 'elogio'):
         elogio = Elogio.objects.filter(nome_completo = nome, email = email, telefone = telefone)
         
         if elogio.exists():
-            {'elogio':elogio}
-            print(elogio)
+          return render(request,"tables/elogios.html",{'elogios': elogio,'admin': False})
+        else:
+            dict['mensagem'] = 'Nenhum elogio encontrado!'
+
             
     elif(tipo == 'sugestao'):
         sugestao = Sugestao.objects.filter(nome_completo = nome, email = email, telefone = telefone)
         
         if sugestao.exists():
-            {'sugestao':sugestao}
-            print(sugestao)
-            
-    return render(request,'home/index.html')
+          return render(request,"tables/sugestoes.html",{'sugestoes': sugestao,'admin': False})
+        else:
+            dict['mensagem'] = 'Nenhuma sugestão encontrada!'
+
+     
+    return render(request,'info/localiza_info.html',{'dict':dict})
     
 #GET PAGINA ACESSO A INFO (OK)
 def show_localiza_info(request):

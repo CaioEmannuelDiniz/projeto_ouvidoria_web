@@ -43,20 +43,22 @@
                 <th class="px-2 py-2">Comentário</th>
                 <th class="px-2 py-2">Status</th>
                 <th class="px-2 py-2">Feedback</th>
+                {% if admin %}
                 <th class="px-2 py-2">Ações</th>
+                {% endif %}
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200 sm:overflow-x-scroll">
               {% for denuncia in denuncias %}
               <tr class="hover:bg-gray-100 border h-5 max-h-5 overflow-hidden sm:overflow-x-scroll">
-                <td class="px-2 py-2 h-5">{{ denuncia.id }}</td>
+                <td class="px-2 py-2 h-5 w-12 max-w-24">{{ denuncia.id }}</td>
                 <td class="px-2 pt-4 h-5 overflow-x-scroll w-16 text-nowrap max-w-20">{{ denuncia.nome_completo }}</td>
                 <td class="px-2 pt-4 h-5 overflow-x-scroll w-28 text-nowrap max-w-32">{{ denuncia.email }}</td>
                 <td class="px-2 pt-4 h-5 overflow-x-scroll w-24 text-nowrap max-w-28">{{ denuncia.telefone }}</td>
                 <td class="px-2 py-2 w-4 max-w-5 text-center">
                   {{ denuncia.tipo_denuncia }}
                 </td>
-                <td class="px-2 py-2">
+                <td class="px-2 py-2 text-center w-20 max-w-24">
                   <a
                     href="{{ denuncia.arquivo_url }}"
                     class="text-blue-500 hover:underline h-5"
@@ -93,7 +95,8 @@
                 >
                 <div class="flex h-5 max-h-5 text-top">{{denuncia.feedback}}</div>
                 </td>
-                <td class="px-2 py-2 h-5">
+                {% if  admin %}
+                <td class="px-2 py-2 h-5 text-center">
                   <a href="{% url 'mostrar_denuncia' denuncia.id %}">
                   <button
                     aria-label="Editar denúncia"
@@ -111,6 +114,7 @@
                     </button>
                   </a>
                 </td>
+                {% endif %}
               </tr>
               {% endfor %}
             </tbody>
